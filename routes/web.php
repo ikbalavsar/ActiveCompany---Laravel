@@ -67,6 +67,9 @@ Route::get('/taskDetailed/{id}',function ($id){
     $assigned_user = DB::select("select * from users where id in(select user_id from user_belongs_to_task where task_id = $id )");
     return view('taskDetailed',['task' => $task, 'project' => $project, 'assigned_user' => $assigned_user]);
 });
+Route::post('/taskDetailed/{id}',function ($id){
+    dd("hello");
+});
 
 Route::get('/createProject',function (){
     return view('createProject');
@@ -74,7 +77,7 @@ Route::get('/createProject',function (){
 
 Route::get('/addTask',function (){
     return view('addTask');
-});
+})->name('send_feedback');
 
 
 

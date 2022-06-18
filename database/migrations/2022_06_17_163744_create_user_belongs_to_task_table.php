@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('user_belongs_to_task', function (Blueprint $table) {
             $table->foreignId('user_id')->references('id')->on('users');
             $table->foreignId('task_id')->references('id')->on('task');
+            $table->string('feedback');
             $table->timestamps();
         });
     }

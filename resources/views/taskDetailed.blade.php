@@ -114,11 +114,22 @@
                 @endforeach
 
 
-                <form action="">
+                <form method="POST" action="{{ route('send_feedback') }}">
+                    @csrf
+
                     <label for="description">Send Your Description</label><br>
-                    <input type="text" id="description" name="description"><br>
-                    <input type="submit" value="Submit">
-                </form> 
+                    <div class="form-text-container">
+                    <textarea name="about" id="about_me"  class="form-input form-text" rows="5"></textarea>
+                    </div>
+                    <div class="form-group row mb-0">
+                        <div class="col-md-8 offset-md-4">
+                            <button type="submit" class="btn-signin">
+                                {{ __('Send Feedback') }}
+                            </button>
+
+                        </div>
+                    </div>
+                </form>
 
             </div>
 
