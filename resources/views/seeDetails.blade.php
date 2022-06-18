@@ -86,7 +86,7 @@
 
         <div class="col-sm p-4 project-cards-detailed">
             <div class="card-content-detailed">
-                <h2 class="line-1">Project-1<span><img src="{{asset('img/star.png')}}" alt="Star" class="star-icon"></span></h2>
+                <h2 class="line-1">{{$project->title}}<span><img src="{{asset('img/star.png')}}" alt="Star" class="star-icon"></span></h2>
                 <div class="card-info-detail">
                     <p>Project ID: #{{$project->id}}</p>
 
@@ -117,7 +117,7 @@
                         @endforeach
 
                     </ul>
-                    <button class="create-project-btn add-task" style="cursor: pointer" onclick="window.location.href = '/addTask' ">Add
+                    <button class="create-project-btn add-task" style="cursor: pointer" onclick="window.location.href = '/addTask/{{$project->id}}' ">Add
                         Task</button>
                 </div>
                 <br>

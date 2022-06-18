@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&family=Rokkitt:wght@200&display=swap"
           rel="stylesheet">
 
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="{{asset('css/main.css')}}">
     <title>Create a New Project</title>
 </head>
 
@@ -22,16 +22,16 @@
 
 
 <div class="logo-box header">
-    <a href="/"><img src="img/logo.png" alt="Logo" class="logo-header"></a>
-    <h1 class="section-name completed-projects">Create New Project</h1>
-
+    <a href="/projects"><img src="{{asset('img/logo.png')}}" alt="Logo" class="logo-header"></a>
+    <h1 class="section-name">Projects</h1>
+    <a href="/completedProjects" class="completed-projects">Completed Projects</a>
     <div class="search">
         <input type="text" placeholder="Search" class="search-text">
-        <img src="img/search.png" alt="Search" class="search-icon">
+        <img src="{{asset('img/search.png')}}" alt="Search" class="search-icon">
     </div>
-    <a href="#"><img src="img/help.png" alt="Find Help" class="find-help" title="Find Help"></a>
-    <a href="/myProfile"><img src="img/profile.png" alt="Profile" class="profile find-help" title="Profile"></a>
-    <a href="#"><img src="img/notification.png" alt="Notifications" class="notification find-help"
+    <a href="#"><img src="{{asset('img/help.png')}}" alt="Find Help" class="find-help" title="Find Help"></a>
+    <a href="/myProfile"><img src="{{asset('img/profile.png')}}" alt="Profile" class="profile find-help" title="Profile"></a>
+    <a href="#"><img src="{{asset('img/notification.png')}}" alt="Notifications" class="notification find-help"
                      title="Notifications"></a>
 </div>
 
@@ -44,22 +44,22 @@
             <nav class="nav-bar-items">
                 <ul>
                     <li class="items">
-                        <a href="/" class="nav-bar-link"><img src="img/project.png" alt="Project"
-                                                                          class="nav-bar-icon"><span class="nav-bar-text">
+                        <a href="/projects" class="nav-bar-link"><img src="{{asset('img/project.png')}}" alt="Project"
+                                                                      class="nav-bar-icon"><span class="nav-bar-text">
                                     Projects
                                 </span></a>
                     </li>
 
                     <li class="items">
-                        <a href="/myWork" class="nav-bar-link"><img src="img/myWork.png" alt="My Work"
-                                                                        class="nav-bar-icon"><span class="nav-bar-text">
+                        <a href="/myWork" class="nav-bar-link"><img src="{{asset('img/myWork.png')}}" alt="My Work"
+                                                                    class="nav-bar-icon"><span class="nav-bar-text">
                                     My Work
                                 </span></a>
                     </li>
 
                     <li class="items">
-                        <a href="/people" class="nav-bar-link"><img src="img/ekip.png" alt="People"
-                                                                        class="nav-bar-icon"><span class="nav-bar-text">
+                        <a href="/people" class="nav-bar-link"><img src="{{asset('img/ekip.png')}}" alt="People"
+                                                                    class="nav-bar-icon"><span class="nav-bar-text">
                                     People
                                 </span></a>
                     </li>
@@ -68,7 +68,7 @@
                         <a class="nav-bar-link" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                            <img src="img/logout.png" alt="Log Out"
+                            <img src="{{asset('img/logout.png')}}" alt="Log Out"
                                  class="nav-bar-icon"><span class="nav-bar-text">
                                     Log out
                                 </span>
@@ -86,67 +86,41 @@
 
         <div class="create-project">
 
-            <div class="create-project-info">
+            <form method="POST" class="create-project-info" action="{{ route('addTask') }}">
+                @csrf
+            <label for="task_title" class="create-project-label">Task Title: </label>
+            <input type="text" name="task_title" id="task_title" class="create-project-input">
+            <input type="number" name="project_id" style="display: none" value="{{$id}}">
+                <label for="task_duedate" class="create-project-label">Due Date: </label>
+                <input type="date" name="task_duedate" id="task_duedate" class="create-project-input">
 
-                <label for="project-title" class="create-project-label">Task Title: </label>
-                <input type="text" name="project-title" id="project-title" class="create-project-input">
-
-                <label for="project-duedate" class="create-project-label">Due Date: </label>
-                <input type="date" name="project-duedate" id="project-duedate" class="create-project-input">
-
-                <label for="project-description" class="create-project-label">Task Description: </label>
-                <textarea name="project-description" id="project-description" cols="60" rows="5"
+                <label for="task_description" class="create-project-label">Task Description: </label>
+                <textarea name="task_description" id="project-description" cols="60" rows="5"
                           class="create-project-input-description"></textarea>
-            </div>
+                <div class="project-members">
+                    <h2 class="assignee">
+                        Choose Assignee
+                    </h2>
+                    @foreach(array_chunk($persons, 3) as $chunk)
+                        @foreach($chunk as $person)
+                            <div class="project-members-info choose-team">
+                                <input name= "persons[]" type="checkbox" value="{{$person->id}}">
+                                <img src="{{asset('img/girl.png')}}" alt="Project Member" class="project-members-info-img">
+                                <p>{{$person->name}} <br> {{$person->role}}</p>
+                            </div>
+                        @endforeach
+
+                    @endforeach
+
+                </div>
+                <button type="submit" class="create-project-btn text-center">
+                    {{ __('Add Task') }}
+                </button>
+            </form>
 
 
             <br><br>
 
-            <div class="project-members">
-                <h2 class="assignee">
-                    Choose Assignee
-                </h2>
-
-                <div class="project-members-info choose-team">
-                    <input type="checkbox">
-                    <img src="img/girl.png" alt="Project Member" class="project-members-info-img">
-                    <p>Ikbal Avsar <br> Front End Developer</p>
-                </div>
-
-                <div class="project-members-info choose-team">
-                    <input type="checkbox">
-                    <img src="img/man.png" alt="Project Member" class="project-members-info-img">
-                    <p>Emre Ayar <br> Full Stack Developer</p>
-                </div>
-
-                <div class="project-members-info choose-team">
-                    <input type="checkbox">
-                    <img src="img/man-1.png" alt="Project Member" class="project-members-info-img">
-                    <p>Kemal Koçyiğit <br> Analyst</p>
-                </div>
-
-                <div class="project-members-info choose-team">
-                    <input type="checkbox">
-                    <img src="img/man-1.png" alt="Project Member" class="project-members-info-img">
-                    <p>Nihat Güngör <br> Android Developer</p>
-                </div>
-
-                <div class="project-members-info choose-team">
-                    <input type="checkbox">
-                    <img src="img/girl.png" alt="Project Member" class="project-members-info-img">
-                    <p>Zeynep Yılmaz <br> Full Stack Developer </p>
-                </div>
-
-                <div class="project-members-info choose-team">
-                    <input type="checkbox">
-                    <img src="img/girl.png" alt="Project Member" class="project-members-info-img">
-                    <p>Betül Okut <br> Analyst</p>
-                </div>
-
-
-            </div>
-
-            <button class="create-project-btn" onclick="window.location.href = '/seeDetails' ">Add Task</button>
 
         </div>
 

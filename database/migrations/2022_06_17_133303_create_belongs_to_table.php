@@ -14,8 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('belongs_to', function (Blueprint $table) {
-            $table->foreignId('project_id')->references('id')->on('Project');
-            $table->foreignId('task_id')->references('id')->on('Task');
+            $table->bigInteger('project_id')->nullable()->unsigned();
+            $table->bigInteger('task_id')->nullable()->unsigned();
+            $table->foreign('project_id')->references('id')->on('project')->onDelete('cascade');
+            $table->foreign('task_id')->references('id')->on('task')->onDelete('cascade');
         });
     }
 

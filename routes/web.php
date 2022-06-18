@@ -99,11 +99,37 @@ Route::get('/createProject',function (){
     return view('createProject');
 });
 
-Route::get('/addTask',function (){
-    return view('addTask');
+Route::get('/addTask/{id}',function ($id){
+    $analyst = DB::select("select *,'Analyst' as role from users where id in (select id from analyst)");
+    $developers = DB::select("select *,'Developer' as role from users where id in(select id from developer)");
+    $managers = DB::select("select *,'Manager' as role from users where id in (select id from manager)");
+    $persons = array_merge($analyst,$developers,$managers);
+    return view('addTask',['persons'=> $persons,'id'=>$id]);
 });
-Route::post('/addTask',function (){
+function insert_task($task_title,$task_description,$task_duedate,$time){
+    DB::insert("insert into task (title,time_sheet,description,due_date,status,created_at,updated_at) values ('$task_title',0,'$task_description','$task_duedate','Active','$time','$time') ");
 
+}
+Route::post('/addTask',function (Request $request){
+    $project_id = $request->input('project_id');
+    $task_title = $request->input('task_title');
+    $task_duedate = $request->input('task_duedate');
+    $task_description = $request->input('task_description');
+    $persons = $request->input('persons');
+    $time = date('Y-m-d H:i:s');
+
+
+
+    insert_task($task_title,$task_description,$task_duedate,$time);
+    $new_task_id = DB::select("select MAX(id) as id from task");
+    $insert_id = $new_task_id[0]->id;
+    DB::insert("insert into belongs_to (project_id,task_id) values ($project_id,$insert_id)");
+    for($i = 0 ; $i < count($persons); $i++){
+        DB::insert("insert into user_belongs_to_task(user_id,task_id,feedback,created_at,updated_at) values ($persons[$i],$insert_id,'','$time','$time')");
+        DB::insert("insert into user_belongs_to_project(user_id,project_id,created_at,updated_at) values ($persons[$i],$project_id,'$time','$time')");
+    }
+    $url = '/seeDetails/'.$project_id;
+    return redirect($url);
 })->name('addTask');
 
 
