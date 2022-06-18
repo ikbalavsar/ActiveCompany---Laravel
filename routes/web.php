@@ -18,7 +18,7 @@ Route::get('/', function () {
     return redirect('/login');
 });
 Route::get('/projects', function (){
-    $projects = DB::select("select * from project");
+    $projects = DB::select("select * from project where status = 'In Progress'");
    return view('projects',['projects'=>$projects]);
 });
 
@@ -27,7 +27,9 @@ Route::get('/myWork', function (){
 });
 
 Route::get('/completedProjects',function (){
-    return view('completedProjects');
+    $projects = DB::select("select * from project where status = 'Completed'");
+
+    return view('completedProjects',['projects' => $projects]);
 });
 
 Route::get('/people',function (){
@@ -63,7 +65,6 @@ Route::get('/taskDetailed/{id}',function ($id){
     $task = DB::select("Select * from task where id = $id");
     $project = DB::select("select * from project where id = (select project_id from belongs_to where task_id = $id)");
     $assigned_user = DB::select("select * from users where id in(select user_id from user_belongs_to_task where task_id = $id )");
-    dd(auth()->user()->id);
     return view('taskDetailed',['task' => $task, 'project' => $project, 'assigned_user' => $assigned_user]);
 });
 

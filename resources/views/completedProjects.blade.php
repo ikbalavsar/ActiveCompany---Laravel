@@ -84,140 +84,35 @@
 
 
 
-        <div class="col-sm p-4 project-cards">
-            <div class="card-content">
-                <h2 class="line-1">Project-1</h2>
-                <p class="card-info">
-                    from <b>Company X </b>
-
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium error quas ut ducimus
-                    perspiciatis sapiente autem dolorem, unde labore repellat vero provident temporibus quos ullam
-                    earum possimus consectetur. Dolorum, atque.
-
-                </p>
-                </p>
-
-                <div class="btn-1">
-                    <span style="color: grey;">Completed</span>
-
-                </div>
 
 
-            </div>
+        @foreach(array_chunk($projects, 3) as $chunk)
+            @foreach($chunk as $project)
+                <div class="col-sm p-4 project-cards">
+                    <div class="card-content">
+                        <h2 class="line-1">{{$project->title}}<span><img src="img/star.png" alt="Star" class="star-icon"></span></h2>
+                        <h4 class="card-info-line1">
+                            Total time:  <span class="alert-danger">{{$project->total_time_sheet}} </span>
+                        </h4>
+
+                        <p>
+                            {{$project->description}}
+                        </p>
+
+                        <div class="btn-1">
+                            <span style="color: grey;">Completed</span>
+
+                        </div>
 
 
-        </div>
-
-
-        <div class="col-sm p-4 project-cards">
-            <div class="card-content">
-                <h2 class="line-1">Project-2</h2>
-                <p class="card-info">
-                    from <b>Company Y </b>
-
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium error quas ut ducimus
-                    perspiciatis sapiente autem dolorem, unde labore repellat vero provident temporibus quos ullam
-                    earum possimus consectetur. Dolorum, atque.
-
-                </p>
-                </p>
-
-                <div class="btn-1">
-                    <span style="color: grey;">Completed</span>
+                    </div>
 
                 </div>
+            @endforeach
+            <div class="w-100"></div>
 
-            </div>
-
-        </div>
-
-        <div class="col-sm p-4 project-cards">
-            <div class="card-content">
-                <h2 class="line-1">Project-3</h2>
-                <p class="card-info">
-                    from <b>Company Z </b>
-
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium error quas ut ducimus
-                    perspiciatis sapiente autem dolorem, unde labore repellat vero provident temporibus quos ullam
-                    earum possimus consectetur. Dolorum, atque.
-
-                </p>
-                </p>
-                <div class="btn-1">
-                    <span style="color: grey;">Completed</span>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="w-100"></div>
-
-        <div class="col-sm-1" style="margin-left: 17px;"></div>
-
-        <div class="col-sm p-4 project-cards">
-            <div class="card-content">
-                <h2 class="line-1">Project-4</h2>
-                <p class="card-info">
-                    from <b>Company F </b>
-
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium error quas ut ducimus
-                    perspiciatis sapiente autem dolorem, unde labore repellat vero provident temporibus quos ullam
-                    earum possimus consectetur. Dolorum, atque.
-
-                </p>
-                </p>
-                <div class="btn-1">
-                    <span style="color: grey;">Completed</span>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="col-sm p-4 project-cards">
-            <div class="card-content">
-                <h2 class="line-1">Project-5</h2>
-                <p class="card-info">
-                    from <b>Company G </b>
-
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium error quas ut ducimus
-                    perspiciatis sapiente autem dolorem, unde labore repellat vero provident temporibus quos ullam
-                    earum possimus consectetur. Dolorum, atque.
-
-                </p>
-                </p>
-                <div class="btn-1">
-                    <span style="color: grey;">Completed</span>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class="col-sm p-4 project-cards">
-            <div class="card-content">
-                <h2 class="line-1">Project-6</h2>
-                <p class="card-info">
-                    from <b>Company H </b>
-
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium error quas ut ducimus
-                    perspiciatis sapiente autem dolorem, unde labore repellat vero provident temporibus quos ullam
-                    earum possimus consectetur. Dolorum, atque.
-
-                </p>
-                </p>
-                <div class="btn-1">
-                    <span style="color: grey;">Completed</span>
-
-                </div>
-
-            </div>
-
-        </div>
+            <div class="col-sm-1" style="margin-left: 17px;"></div>
+        @endforeach
 
     </div>
 </div>
