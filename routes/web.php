@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
@@ -65,11 +66,34 @@ Route::get('/taskDetailed/{id}',function ($id){
     $task = DB::select("Select * from task where id = $id");
     $project = DB::select("select * from project where id = (select project_id from belongs_to where task_id = $id)");
     $assigned_user = DB::select("select * from users where id in(select user_id from user_belongs_to_task where task_id = $id )");
-    return view('taskDetailed',['task' => $task, 'project' => $project, 'assigned_user' => $assigned_user]);
+    $boolean_flag = 0;
+    $all_feedback = [];
+    for($i = 0 ; $i < count($assigned_user);$i++){
+        if(auth()->user()->id == $assigned_user[$i]->id){
+            $boolean_flag = 1;
+        }
+        $assign_id = $assigned_user[$i]->id;
+        $feedback = DB::select("select * from user_belongs_to_task where task_id = $id and user_id = $assign_id");
+        $all_feedback[] = [
+            'assigned_user' => $assigned_user[$i]->name,
+            'feedback' => $feedback[0]->feedback
+        ];
+    }
+    return view('taskDetailed',['task' => $task, 'project' => $project, 'all_feedback' => $all_feedback, 'boolean_flag' => $boolean_flag]);
 });
-Route::post('/taskDetailed/{id}',function ($id){
-    dd("hello");
-});
+Route::post('/taskDetailed/',function (Request $request){
+    if(auth()->user()){
+        $task_id = $request->input('task_id');
+        $feedback = $request->input('feedback');
+        $user_id = auth()->user()->id;
+        DB::update("update user_belongs_to_task set feedback = '$feedback' where user_id = $user_id and task_id = $task_id");
+        $url = '/taskDetailed/'.$task_id;
+        return redirect($url);
+    }else{
+        return redirect('login');
+    }
+
+})->name('send_feedback');;
 
 Route::get('/createProject',function (){
     return view('createProject');
@@ -77,7 +101,10 @@ Route::get('/createProject',function (){
 
 Route::get('/addTask',function (){
     return view('addTask');
-})->name('send_feedback');
+});
+Route::post('/addTask',function (){
+
+})->name('addTask');
 
 
 

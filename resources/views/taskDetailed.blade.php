@@ -105,22 +105,23 @@
 
 
 
-                @foreach($assigned_user as $user)
+                @foreach($all_feedback as $user)
                     <div class="tasks-updates-info">
                         <img src="{{asset('img/man.png')}}" alt="Team Member" class="tasks-updates-info-img">
-                        <h3>{{$user->name}}</h3>
-                        <p class="tasks-updates-info-p">//TO-DO ikbal</p>
+                        <h3>{{$user['assigned_user']}}</h3>
+                        <p class="tasks-updates-info-p">{{$user['feedback']}}</p>
                     </div>
                 @endforeach
 
 
-                <form method="POST" action="{{ route('send_feedback') }}">
+                <form method="POST" style="display: @if($boolean_flag == 0) none @endif" action="{{ route('send_feedback') }}">
                     @csrf
 
                     <label for="description">Send Your Description</label><br>
                     <div class="form-text-container">
-                    <textarea name="about" id="about_me"  class="form-input form-text" rows="5"></textarea>
+                    <textarea name="feedback" id="about_me"  class="form-input form-text" rows="5"> </textarea>
                     </div>
+                    <input style="display: none" name="task_id" id="task_id" value="{{$task[0]->id}}">
                     <div class="form-group row mb-0">
                         <div class="col-md-8 offset-md-4">
                             <button type="submit" class="btn-signin">
