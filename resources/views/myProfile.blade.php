@@ -88,9 +88,9 @@
 
 
             <label for="my-profile-name" class="my-profile-label">First Name & Last Name</label>
-            <input type="text" placeholder="Hakan Okut" class="my-profile-input" name="my-profile-name" required>
+            <input type="text" placeholder="{{auth()->user()->name}}" class="my-profile-input" name="my-profile-name" required>
             <label for="my-profile-mail" class="my-profile-label">Email</label>
-            <input type="email" placeholder="hakanokut232323@gmail.com " class="my-profile-input"
+            <input type="email" placeholder="{{auth()->user()->email}} " class="my-profile-input"
                    name="my-profile-mail" required>
             <p>*This e-mail is your login username,so it is required.</p>
 

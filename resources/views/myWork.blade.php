@@ -90,48 +90,16 @@
 
                 <div class="tasks-list">
                     <ul class="tasks-list-list">
-                        <li class="task-item">
-                            <a href="/taskDetailed" class="tasks">Task1</a>
 
-                            <span>
-                                    assigned by <b>Ikbal Avsar</b>
-                                </span>
+                        @foreach($tasks as $task)
+                            <li class="task-item">
+                                <a href="/taskDetailed/{{$task->id}}" class="tasks">Task1</a>
 
-                            <span style="color: green;">Active</span>
+                                <span style="color: green;">{{$task->status}}</span>
 
 
-                        </li>
-
-
-                        <li class="task-item">
-                            <a href="/taskDetailed" class="tasks">Task2</a>
-                            <span>
-                                    assigned by <b>Emre Ayar</b>
-                                </span>
-
-                            <span style="color: green;">Active</span>
-
-                        </li>
-
-                        <li class="task-item">
-                            <a href="/taskDetailed" class="tasks">Task3</a>
-                            <span>
-                                    assigned by <b>Betül Okut </b>
-                                </span>
-
-                            <span style="color: green;">Active</span>
-
-                        </li>
-
-                        <li class="task-item">
-                            <a href="/taskDetailed" class="tasks">Task4</a>
-                            <span>
-                                    assigned by <b>Nihat Güngör</b>
-                                </span>
-
-                            <span style="color: red;">Important</span>
-
-                        </li>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
 

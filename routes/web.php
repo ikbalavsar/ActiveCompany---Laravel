@@ -24,7 +24,9 @@ Route::get('/projects', function (){
 });
 
 Route::get('/myWork', function (){
-    return view('myWork');
+    $user_id = auth()->user()->id;
+    $tasks = DB::select("select * from task where id in (select task_id from user_belongs_to_task where user_id = $user_id)");
+    return view('myWork',['tasks' => $tasks]);
 });
 
 Route::get('/completedProjects',function (){
@@ -34,7 +36,11 @@ Route::get('/completedProjects',function (){
 });
 
 Route::get('/people',function (){
-    return view('people');
+    $analyst = DB::select("select *,'Analyst' as role from users where id in (select id from analyst)");
+    $developers = DB::select("select *,'Developer' as role from users where id in(select id from developer)");
+    $managers = DB::select("select *,'Manager' as role from users where id in (select id from manager)");
+
+    return view('people',['analyst'=>$analyst,'developers'=>$developers,'managers'=>$managers]);
 });
 
 Route::get('/myProfile',function (){
@@ -96,20 +102,35 @@ Route::post('/taskDetailed/',function (Request $request){
 })->name('send_feedback');;
 
 Route::get('/createProject',function (){
-    return view('createProject');
+    $managers = DB::select("select *,'Manager' as role from users where id in (select id from manager)");
+
+    return view('createProject',['persons'=>$managers]);
 });
+
+Route::post('/createProject/',function (Request $request){
+
+    $project_title = $request->input('project_title');
+    $project_duedate = $request->input('project_duedate');
+    $project_description = $request->input('project_description');
+    $persons = $request->input('persons');
+    $time = date('Y-m-d H:i:s');
+
+    DB::insert("insert into project (title,total_time_sheet,status,description,due_date,created_at,updated_at) values ('$project_title',0,'In Progress','$project_description','$project_duedate','$time','$time')");
+    $new_project_id = DB::select("select MAX(id) as id from project");
+    $insert_id = $new_project_id[0]->id;
+    for($i = 0 ; $i < count($persons); $i++){
+        DB::insert("insert into user_belongs_to_project(user_id,project_id,created_at,updated_at) values ($persons[$i],$insert_id,'$time','$time')");
+    }
+    return redirect('/');
+})->name('createProject');
 
 Route::get('/addTask/{id}',function ($id){
     $analyst = DB::select("select *,'Analyst' as role from users where id in (select id from analyst)");
     $developers = DB::select("select *,'Developer' as role from users where id in(select id from developer)");
-    $managers = DB::select("select *,'Manager' as role from users where id in (select id from manager)");
-    $persons = array_merge($analyst,$developers,$managers);
+    $persons = array_merge($analyst,$developers);
     return view('addTask',['persons'=> $persons,'id'=>$id]);
 });
-function insert_task($task_title,$task_description,$task_duedate,$time){
-    DB::insert("insert into task (title,time_sheet,description,due_date,status,created_at,updated_at) values ('$task_title',0,'$task_description','$task_duedate','Active','$time','$time') ");
 
-}
 Route::post('/addTask',function (Request $request){
     $project_id = $request->input('project_id');
     $task_title = $request->input('task_title');
@@ -118,9 +139,7 @@ Route::post('/addTask',function (Request $request){
     $persons = $request->input('persons');
     $time = date('Y-m-d H:i:s');
 
-
-
-    insert_task($task_title,$task_description,$task_duedate,$time);
+    DB::insert("insert into task (title,time_sheet,description,due_date,status,created_at,updated_at) values ('$task_title',0,'$task_description','$task_duedate','Active','$time','$time') ");
     $new_task_id = DB::select("select MAX(id) as id from task");
     $insert_id = $new_task_id[0]->id;
     DB::insert("insert into belongs_to (project_id,task_id) values ($project_id,$insert_id)");

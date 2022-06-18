@@ -22,7 +22,7 @@
 
 
 <div class="logo-box header">
-    <a href="/homePage"><img src="img/logo.png" alt="Logo" class="logo-header"></a>
+    <a href="/projects"><img src="img/logo.png" alt="Logo" class="logo-header"></a>
     <h1 class="section-name completed-projects">Create New Project</h1>
 
     <div class="search">
@@ -86,68 +86,42 @@
 
         <div class="create-project">
 
-            <div class="create-project-info">
+            <form method="POST" class="create-project-info" action="{{ route('createProject') }}">
+                @csrf
+                <label for="project_title" class="create-project-label">Project Title: </label>
+                <input type="text" name="project_title" id="project_title" class="create-project-input">
+                <label for="project_duedate" class="create-project-label">Due Date: </label>
+                <input type="date" name="project_duedate" id="project_duedate" class="create-project-input">
 
-                <label for="project-title" class="create-project-label">Project Title: </label>
-                <input type="text" name="project-title" id="project-title" class="create-project-input">
-
-                <label for="project-duedate" class="create-project-label">Due Date: </label>
-                <input type="date" name="project-duedate" id="project-duedate" class="create-project-input">
-
-                <label for="project-description" class="create-project-label">Project Description: </label>
-                <textarea name="project-description" id="project-description" cols="60" rows="5"
+                <label for="project_description" class="create-project-label">Task Description: </label>
+                <textarea name="project_description" id="project-description" cols="60" rows="5"
                           class="create-project-input-description"></textarea>
-            </div>
+                <div class="project-members">
+                    <h2 class="assignee">
+                        Choose Manager
+                    </h2>
+                    @foreach(array_chunk($persons, 3) as $chunk)
+                        @foreach($chunk as $person)
+                            <div class="project-members-info choose-team">
+                                <input name= "persons[]" type="checkbox" value="{{$person->id}}">
+                                <img src="{{asset('img/girl.png')}}" alt="Project Member" class="project-members-info-img">
+                                <p>{{$person->name}} <br> {{$person->role}}</p>
+                            </div>
+                        @endforeach
+
+                    @endforeach
+
+                </div>
+                <button type="submit" class="create-project-btn text-center">
+                    {{ __('Create Project') }}
+                </button>
+            </form>
 
 
             <br><br>
 
-            <div class="project-members">
-                <h2 class="assignee">
-                    Choose Team
-                </h2>
-
-                <div class="project-members-info choose-team">
-                    <input type="checkbox">
-                    <img src="img/girl.png" alt="Project Member" class="project-members-info-img">
-                    <p>Ikbal Avsar <br> Front End Developer</p>
-                </div>
-
-                <div class="project-members-info choose-team">
-                    <input type="checkbox">
-                    <img src="img/man.png" alt="Project Member" class="project-members-info-img">
-                    <p>Emre Ayar <br> Full Stack Developer</p>
-                </div>
-
-                <div class="project-members-info choose-team">
-                    <input type="checkbox">
-                    <img src="img/man-1.png" alt="Project Member" class="project-members-info-img">
-                    <p>Kemal Koçyiğit <br> Analyst</p>
-                </div>
-
-                <div class="project-members-info choose-team">
-                    <input type="checkbox">
-                    <img src="img/man-1.png" alt="Project Member" class="project-members-info-img">
-                    <p>Nihat Güngör <br> Android Developer</p>
-                </div>
-
-                <div class="project-members-info choose-team">
-                    <input type="checkbox">
-                    <img src="img/girl.png" alt="Project Member" class="project-members-info-img">
-                    <p>Zeynep Yılmaz <br> Full Stack Developer </p>
-                </div>
-
-                <div class="project-members-info choose-team">
-                    <input type="checkbox">
-                    <img src="img/girl.png" alt="Project Member" class="project-members-info-img">
-                    <p>Betül Okut <br> Analyst</p>
-                </div>
 
 
-            </div>
-
-            <button class="create-project-btn" onclick="window.location.href = '/' ">Create
-                Project</button>
 
         </div>
 

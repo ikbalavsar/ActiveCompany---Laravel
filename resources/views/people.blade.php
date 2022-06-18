@@ -90,75 +90,49 @@
                     <h2 class="assignee">
                         Managers
                     </h2>
-                    <div class="project-members-info">
-                        <img src="img/girl.png" alt="Project Member" class="project-members-info-img">
-                        <p>Ikbal Avsar <br>ikbalavsar@example.com</p>
-                    </div>
 
-                    <div class="project-members-info">
-                        <img src="img/man.png" alt="Project Member" class="project-members-info-img">
-                        <p>Emre Ayar <br>emreayar@example.com</p>
-                    </div>
+                    @foreach(array_chunk($managers, 3) as $chunk)
+                        @foreach($chunk as $person)
+                            <div class="project-members-info">
+                                <img src="img/man.png" alt="Project Member" class="project-members-info-img">
+                                <p>{{$person->name}} <br>{{$person->email}}</p>
+                            </div>
+                        @endforeach
 
-                    <div class="project-members-info">
-                        <img src="img/man-1.png" alt="Project Member" class="project-members-info-img">
-                        <p>Kemal Koçyiğit <br>kemalkoc@example.com</p>
-                    </div>
-
-                    <div class="project-members-info">
-                        <img src="img/man-1.png" alt="Project Member" class="project-members-info-img">
-                        <p>Nihat Güngör <br>nihalgungor@example.com</p>
-                    </div>
-
-                    <div class="project-members-info">
-                        <img src="img/girl.png" alt="Project Member" class="project-members-info-img">
-                        <p>Zeynep Yılmaz <br>zeynepyılmaz@example.com</p>
-                    </div>
-
-                    <div class="project-members-info">
-                        <img src="img/girl.png" alt="Project Member" class="project-members-info-img">
-                        <p>Betül Okut <br>betulokut@example.com</p>
-                    </div>
+                    @endforeach
                 </div>
 
                 <br><br>
 
                 <div class="project-members">
                     <h2 class="assignee">
-                        Employees
+                        Developers
                     </h2>
-                    <div class="project-members-info">
-                        <img src="img/girl.png" alt="Project Member" class="project-members-info-img">
-                        <p>Ikbal Avsar <br>ikbalavsar@example.com <br> <i> Front End Developer</i></p>
-                    </div>
+                    @foreach(array_chunk($developers, 3) as $chunk)
+                        @foreach($chunk as $person)
+                            <div class="project-members-info">
+                                <img src="img/girl.png" alt="Project Member" class="project-members-info-img">
+                                <p>{{$person->name}} <br>{{$person->email}}</p>
+                            </div>
+                        @endforeach
 
-                    <div class="project-members-info">
-                        <img src="img/man.png" alt="Project Member" class="project-members-info-img">
-                        <p>Emre Ayar <br>emreayar@example.com <br> <i>Full Stack Developer</i> </p>
-                    </div>
-
-                    <div class="project-members-info">
-                        <img src="img/man-1.png" alt="Project Member" class="project-members-info-img">
-                        <p>Kemal Koçyiğit <br>kemalkoc@example.com <br> <i>Analyst</i> </p>
-                    </div>
-
-                    <div class="project-members-info">
-                        <img src="img/man-1.png" alt="Project Member" class="project-members-info-img">
-                        <p>Nihat Güngör <br>nihatgungor@example.com<br> <i>Android Developer</i> </p>
-                    </div>
-
-                    <div class="project-members-info">
-                        <img src="img/girl.png" alt="Project Member" class="project-members-info-img">
-                        <p>Zeynep Yılmaz <br>zeynepyılmaz@example.com<br><i>Full Stack Developer</i> </p>
-                    </div>
-
-                    <div class="project-members-info">
-                        <img src="img/girl.png" alt="Project Member" class="project-members-info-img">
-                        <p>Betül Okut <br>betulokut@example.com<br><i>Analyst</i> </p>
-                    </div>
+                    @endforeach
                 </div>
 
+                <div class="project-members">
+                    <h2 class="assignee">
+                        Analysts
+                    </h2>
+                    @foreach(array_chunk($analyst, 3) as $chunk)
+                        @foreach($chunk as $person)
+                            <div class="project-members-info">
+                                <img src="img/girl.png" alt="Project Member" class="project-members-info-img">
+                                <p>{{$person->name}} <br>{{$person->email}}</p>
+                            </div>
+                        @endforeach
 
+                    @endforeach
+                </div>
 
             </div>
 
