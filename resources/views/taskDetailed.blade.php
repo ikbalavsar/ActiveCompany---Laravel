@@ -114,7 +114,11 @@
                 @endforeach
 
 
-
+                <form action="">
+                    <label for="description">Send Your Description</label><br>
+                    <input type="text" id="description" name="description"><br>
+                    <input type="submit" value="Submit">
+                </form> 
 
             </div>
 
