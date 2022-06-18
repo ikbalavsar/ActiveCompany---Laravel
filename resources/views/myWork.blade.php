@@ -87,21 +87,37 @@
             <div class="card-content-detailed">
                 <p style="font-size: 25px; font-weight: bolder; border-bottom: solid 2px black; width: 958px;">Tasks
                 </p>
+                @if(auth()->user()->job_type != 'Manager')
+                    <div class="tasks-list">
+                        <ul class="tasks-list-list">
 
-                <div class="tasks-list">
-                    <ul class="tasks-list-list">
+                            @foreach($tasks as $task)
+                                <li class="task-item">
+                                    <a href="/taskDetailed/{{$task->id}}" class="tasks">{{$task->title}}</a>
 
-                        @foreach($tasks as $task)
-                            <li class="task-item">
-                                <a href="/taskDetailed/{{$task->id}}" class="tasks">Task1</a>
-
-                                <span style="color: green;">{{$task->status}}</span>
+                                    <span style="color: green;">{{$task->status}}</span>
 
 
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @else
+                    <div class="tasks-list">
+                        <ul class="tasks-list-list">
+
+                            @foreach($projects as $project)
+                                <li class="task-item">
+                                    <a href="/seeDetails/{{$project->id}}" class="tasks">{{$project->title}}</a>
+
+                                    <span style="color: green;">{{$project->status}}</span>
+
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
 
             </div>
 

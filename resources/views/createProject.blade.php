@@ -93,7 +93,7 @@
                 <label for="project_duedate" class="create-project-label">Due Date: </label>
                 <input type="date" name="project_duedate" id="project_duedate" class="create-project-input">
 
-                <label for="project_description" class="create-project-label">Task Description: </label>
+                <label for="project_description" class="create-project-label">Project Description: </label>
                 <textarea name="project_description" id="project-description" cols="60" rows="5"
                           class="create-project-input-description"></textarea>
                 <div class="project-members">

@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&family=Rokkitt:wght@200&display=swap"
           rel="stylesheet">
 
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="{{asset('css/main.css')}}">
     <title>Welcome to Active Company</title>
 </head>
 
@@ -84,7 +84,7 @@
 
 
 
-        <div class="col-sm p-4 project-cards-detailed">
+        <div class="col-sm p-4 ">
             <div class="card-content-detailed">
                 <div class="project-members">
                     <h2 class="assignee">

@@ -26,7 +26,7 @@
     <h1 class="section-name">Projects</h1>
     <a href="/completedProjects" class="completed-projects">Completed Projects</a>
     <div class="search">
-        <a href="/createProject" class="create-link">Create New Project</a>
+        <a href="/createProject" style="display: @if(auth()->user()->job_type!='Manager') none @endif" class="create-link">Create New Project</a>
         <input type="text" placeholder="Search" class="search-text">
         <img src="img/search.png" alt="Search" class="search-icon">
 

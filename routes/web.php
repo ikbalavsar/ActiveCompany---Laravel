@@ -26,7 +26,8 @@ Route::get('/projects', function (){
 Route::get('/myWork', function (){
     $user_id = auth()->user()->id;
     $tasks = DB::select("select * from task where id in (select task_id from user_belongs_to_task where user_id = $user_id)");
-    return view('myWork',['tasks' => $tasks]);
+    $projects = DB::select("select * from project where id in(select project_id from manages where manager_id = $user_id)");
+    return view('myWork',['tasks' => $tasks,'projects'=>$projects]);
 });
 
 Route::get('/completedProjects',function (){
@@ -120,6 +121,7 @@ Route::post('/createProject/',function (Request $request){
     $insert_id = $new_project_id[0]->id;
     for($i = 0 ; $i < count($persons); $i++){
         DB::insert("insert into user_belongs_to_project(user_id,project_id,created_at,updated_at) values ($persons[$i],$insert_id,'$time','$time')");
+        DB::insert("insert into manages (manager_id,project_id) values ($persons[$i],$insert_id)");
     }
     return redirect('/');
 })->name('createProject');
