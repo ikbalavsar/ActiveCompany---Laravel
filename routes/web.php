@@ -46,14 +46,13 @@ Route::get('/seeDetails/{id}',function ($id){
     $assigned_person = DB::select("select * from users where id in (select user_id from user_belongs_to_project where project_id = $project_model->id)");
     for($i = 0; $i < count($tasks);$i++){
         $task_id = $tasks[$i]->id;
-        $person = DB::select("select * from users where id = (select user_id from user_belongs_to_task where task_id = $task_id)");
+        $person = DB::select("select * from users where id in (select user_id from user_belongs_to_task where task_id = $task_id)");
+
         $all_task_and_user[] = [
-            'user_id' => $person[0]->id,
-            'user_name' => $person[0]->name,
             'title' => $tasks[$i]->title,
             'status' => $tasks[$i]->status,
-            'task_id' => $tasks[$i]->id
-
+            'task_id' => $tasks[$i]->id,
+            'count_of_person' => count($person)
         ];
 
     }
@@ -61,7 +60,11 @@ Route::get('/seeDetails/{id}',function ($id){
 });
 
 Route::get('/taskDetailed/{id}',function ($id){
-    return view('taskDetailed');
+    $task = DB::select("Select * from task where id = $id");
+    $project = DB::select("select * from project where id = (select project_id from belongs_to where task_id = $id)");
+    $assigned_user = DB::select("select * from users where id in(select user_id from user_belongs_to_task where task_id = $id )");
+    dd(auth()->user()->id);
+    return view('taskDetailed',['task' => $task, 'project' => $project, 'assigned_user' => $assigned_user]);
 });
 
 Route::get('/createProject',function (){

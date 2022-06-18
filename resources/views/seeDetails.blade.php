@@ -107,7 +107,7 @@
                             <li class="task-item">
                                 <a href="/taskDetailed/{{$task['task_id']}}" class="tasks">{{$task['title']}}</a>
                                 <span>
-                                    assigned to <b>id:{{$task['user_id']}} {{$task['user_name']}}</b>
+                                    assigned to <b>{{$task['count_of_person']}}</b> Employee
                                 </span>
 
                                 <span style="color: @if($task['status'] == 'Active')green @else red @endif;">{{$task['status']}}</span>
@@ -117,7 +117,7 @@
                         @endforeach
 
                     </ul>
-                    <button class="create-project-btn add-task" onclick="window.location.href = '/addTask' ">Add
+                    <button class="create-project-btn add-task" style="cursor: pointer" onclick="window.location.href = '/addTask' ">Add
                         Task</button>
                 </div>
                 <br>

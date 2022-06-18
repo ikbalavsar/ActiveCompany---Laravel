@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&family=Rokkitt:wght@200&display=swap"
           rel="stylesheet">
 
-    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="{{asset('css/main.css')}}">
     <title>Welcome to Active Company</title>
 </head>
 
@@ -22,16 +22,16 @@
 
 
 <div class="logo-box header">
-    <a href="/project"><img src="img/logo.png" alt="Logo" class="logo-header"></a>
+    <a href="/project"><img src="{{asset('img/logo.png')}}" alt="Logo" class="logo-header"></a>
     <h1 class="section-name">Projects</h1>
     <a href="/completedProjects" class="completed-projects">Completed Projects</a>
     <div class="search">
         <input type="text" placeholder="Search" class="search-text">
-        <img src="img/search.png" alt="Search" class="search-icon">
+        <img src="{{asset('img/search.png')}}" alt="Search" class="search-icon">
     </div>
-    <a href="#"><img src="img/help.png" alt="Find Help" class="find-help" title="Find Help"></a>
-    <a href="/myProfile"><img src="img/profile.png" alt="Profile" class="profile find-help" title="Profile"></a>
-    <a href="#"><img src="img/notification.png" alt="Notifications" class="notification find-help"
+    <a href="#"><img src="{{asset('img/help.png')}}" alt="Find Help" class="find-help" title="Find Help"></a>
+    <a href="/myProfile"><img src="{{asset('img/profile.png')}}" alt="Profile" class="profile find-help" title="Profile"></a>
+    <a href="#"><img src="{{asset('img/notification.png')}}" alt="Notifications" class="notification find-help"
                      title="Notifications"></a>
 </div>
 
@@ -44,22 +44,22 @@
             <nav class="nav-bar-items">
                 <ul>
                     <li class="items">
-                        <a href="/projects" class="nav-bar-link"><img src="img/project.png" alt="Project"
-                                                                          class="nav-bar-icon"><span class="nav-bar-text">
+                        <a href="/projects" class="nav-bar-link"><img src="{{asset('img/project.png')}}" alt="Project"
+                                                                      class="nav-bar-icon"><span class="nav-bar-text">
                                     Projects
                                 </span></a>
                     </li>
 
                     <li class="items">
-                        <a href="/myWork" class="nav-bar-link"><img src="img/myWork.png" alt="My Work"
-                                                                        class="nav-bar-icon"><span class="nav-bar-text">
+                        <a href="/myWork" class="nav-bar-link"><img src="{{asset('img/myWork.png')}}" alt="My Work"
+                                                                    class="nav-bar-icon"><span class="nav-bar-text">
                                     My Work
                                 </span></a>
                     </li>
 
                     <li class="items">
-                        <a href="/people" class="nav-bar-link"><img src="img/ekip.png" alt="People"
-                                                                        class="nav-bar-icon"><span class="nav-bar-text">
+                        <a href="/people" class="nav-bar-link"><img src="{{asset('img/ekip.png')}}" alt="People"
+                                                                    class="nav-bar-icon"><span class="nav-bar-text">
                                     People
                                 </span></a>
                     </li>
@@ -68,7 +68,7 @@
                         <a class="nav-bar-link" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                            <img src="img/logout.png" alt="Log Out"
+                            <img src="{{asset('img/logout.png')}}" alt="Log Out"
                                  class="nav-bar-icon"><span class="nav-bar-text">
                                     Log out
                                 </span>
@@ -86,51 +86,33 @@
 
         <div class="col-sm p-4 project-cards-detailed">
             <div class="card-content-detailed">
-                <h2 class="line-1">Task-1 <span class="company-name">
-                            from
-                            <b>Company X </b>
-                        </span></h2>
-                <h5>Created By Kemal Koçyiğit</h5>
+                <h2 class="line-1">{{$task[0]->title}} </h2>
                 <div class="card-info-detail">
 
-                    <p>Project ID: #1928</p>
-                    <p>Task ID: #3746</p>
+                    <p>Project ID: {{$project[0]->id}}</p>
+                    <p>Task ID: {{$task[0]->id}}</p>
 
-                    <p>Created Date: 01/01/2022</p>
-                    <p style="color: darkgreen;">Status: IN PROGRESS </p>
-                    <p>Due Date : 01/01/2023</p>
+                    <p>Created Date: {{$task[0]->created_at}}</p>
+                    <p>Status: <span style="color: @if($task[0]->status == 'Active')green @else red @endif;"> {{$task[0]->status}}</span> </p>
+                    <p>Due Date : {{$task[0]->due_date}}</p>
 
                 </div>
 
                 <p class="project-info">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Itaque hic maiores esse odio,
-                    quibusdam nesciunt voluptatem nobis consectetur, omnis rerum dignissimos tenetur, odit
-                    accusantium? Accusamus fugit asperiores tenetur doloribus ut?
+                   {{$task[0]->description}}
 
                 </p>
 
-                <div class="task-updates-message">
-                    <input type="text" placeholder="Write a comment.." class="task-updates-message-input">
-                    <button class="task-updates-message-btn">Send</button>
-                </div>
 
-                <div class="tasks-updates-info">
-                    <img src="img/man.png" alt="Team Member" class="tasks-updates-info-img">
-                    <h3>Emre Ayar </h3>
-                    <p class="tasks-updates-info-p">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste
-                        ducimus cum aliquid libero assumenda illum maiores ab aut! Temporibus veritatis beatae aut!
-                        Sunt architecto quos voluptate dignissimos accusantium laudantium eveniet?</p>
 
-                </div>
+                @foreach($assigned_user as $user)
+                    <div class="tasks-updates-info">
+                        <img src="{{asset('img/man.png')}}" alt="Team Member" class="tasks-updates-info-img">
+                        <h3>{{$user->name}}</h3>
+                        <p class="tasks-updates-info-p">//TO-DO ikbal</p>
+                    </div>
+                @endforeach
 
-                <div class="tasks-updates-info">
-                    <img src="img/girl.png" alt="Team Member" class="tasks-updates-info-img">
-                    <h3>İkbal Avsar </h3>
-                    <p class="tasks-updates-info-p">Lorem ipsum dolor sit amet consectetur adipisicing elit. Iste
-                        ducimus cum aliquid libero assumenda illum maiores ab aut! Temporibus veritatis beatae aut!
-                        Sunt architecto quos voluptate dignissimos accusantium laudantium eveniet?</p>
-
-                </div>
 
 
 
@@ -145,7 +127,7 @@
     </div>
 </div>
 
-<script src="js/star.js"></script>
+<script src="{{asset('js/star.js')}}"></script>
 
 </body>
 
