@@ -1,0 +1,60 @@
+.company-name {
+    border-bottom: solid 2px #EC994B;
+    border-left: solid 2px #EC994B;
+    border-top: solid 2px #EC994B;
+    border-radius: 4px;
+
+}
+
+.task-updates-message {
+    padding-left: 10px;
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+
+    &-input {
+        width: 300px;
+        height: 30px;
+        background-color: rgb(213, 209, 209);
+        border: solid 1px black;
+        border-radius: 4px;
+        padding-left: 10px;
+        font-size: 16px;
+        font-family: 'Rokkit', serif;
+    }
+
+    &-btn {
+        width: 100px;
+        height: 30px;
+        border-radius: 4px;
+        border: solid 1px #15133C;
+        font-family: 'Rokkit', serif;
+        transition: all .5s;
+
+        &:hover {
+            background-color: #15133C;
+            color: white;
+        }
+    }
+}
+
+.tasks-updates-info {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 20px;
+
+    &-img {
+        width: 60px;
+        height: auto;
+    }
+
+    &-p {
+        width: 400px;
+        font-size: 13px;
+        border: solid 1px #15133C;
+        border-radius: 4px;
+    }
+}

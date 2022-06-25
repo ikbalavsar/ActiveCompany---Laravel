@@ -1,0 +1,122 @@
+.card-content-detailed {
+    padding-left: 20px;
+    border-radius: 8px;
+    background-color: #ece9e5;
+    font-family: 'Rokkit', serif;
+    font-weight: bold;
+    padding: 12px;
+
+    p {
+        padding: 10px;
+    }
+}
+
+.project-cards-detailed {
+    form {
+        .form-text-container {
+            textarea {
+                width: 100%;
+                height: 80px;
+                margin-top: 0px;
+                font-size: 12px;
+                font-weight: normal;
+                padding: 12px;
+            }
+        }
+    }
+}
+
+.project-info {
+    font-size: 13px;
+}
+
+.tasks-list {
+    padding-left: 10px;
+    font-size: 15px;
+    font-family: 'Rokkit', serif;
+    display: flex;
+    flex-direction: column;
+
+    &-list {
+        list-style: none;
+
+    }
+}
+
+.task-item {
+
+    width: 550px;
+    height: 25px;
+
+    margin-bottom: 21px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tasks {
+    //width: 50px;
+    //height: 20px;
+    text-decoration: none;
+    color: black;
+    padding: 5px;
+    transition: all .2s;
+    border-radius: 4px;
+    background-color: transparent;
+    border: solid 1px black;
+    text-align: center;
+    //padding-bottom: 25px;
+
+
+    &:hover {
+        text-decoration: none;
+        color: black;
+        cursor: pointer;
+    }
+
+}
+
+.card-info-detail {
+    margin-right: 43px;
+    font-size: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+
+    p {
+        font-size: 15px;
+    }
+
+}
+
+.project-members {
+    font-size: 15px;
+    font-family: 'Rokkit', serif;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    &-info {
+        width: 312px;
+        display: flex;
+        flex-direction: row;
+        gap: 30px;
+        margin-bottom: 10px;
+        align-items: center;
+
+        &-img {
+            width: 60px;
+            height: auto;
+        }
+    }
+}
+
+.assignee {
+    font-weight: bolder;
+    margin-bottom: 10px;
+    border-bottom: solid 2px black;
+    width: 958px;
+    text-align: center;
+    padding: 10px;
+}

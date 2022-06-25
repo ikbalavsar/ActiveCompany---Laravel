@@ -1,0 +1,61 @@
+.create-project {
+    background-color: #ece9e5;
+    border-radius: 8px;
+    width: 979px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+
+    &-label {
+        font-size: 20px;
+        font-family: 'Rokkit', serif;
+        font-weight: bolder;
+        padding-left: 10px;
+    }
+
+    &-input {
+        width: 400px;
+        height: auto;
+        font-size: 16px;
+        padding-left: 10px;
+        margin-left: 10px;
+
+        &-description {
+            width: 600px;
+            margin-left: 10px;
+            padding-left: 10px;
+            padding-top: 6px;
+            font-size: 16px;
+        }
+
+    }
+
+    &-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &-btn {
+        width: 200px;
+        height: 40px;
+        color: #ece9e5;
+        //margin-left: 780px;
+        border-radius: 4px;
+        background-color: #242c3a;
+        font-family: "Roboto";
+        align-self: end;
+    }
+}
+
+.choose-team {
+    margin-top: 10px;
+    font-weight: bolder;
+    padding-left: 10px;
+    flex-grow: 1;
+    transition: all .2s;
+
+    &:hover {
+
+        box-shadow: 5px 10px 18px black;
+    }
+}

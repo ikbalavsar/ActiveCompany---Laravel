@@ -1,0 +1,51 @@
+.my-profile {
+    width: 600px;
+    height: 450px;
+    background-color: #ece9e5;
+    border-radius: 8px;
+    margin-left: 122px;
+    box-shadow: 5px 10px 18px black;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.profile-picture {
+    width: 80px;
+    height: auto;
+
+    p {
+        margin-top: 3px;
+        font-size: 15px;
+        font-family: 'Rokkit', serif;
+    }
+}
+
+.my-profile-label {
+    font-size: 15px;
+    font-family: 'Rokkit', serif;
+    padding-left: 10px;
+    padding-top: 10px;
+    font-weight: bolder;
+}
+
+.my-profile-input {
+    width: 300px;
+    height: 36px;
+    padding-left: 10px;
+    border-radius: 4px;
+    border: none;
+    margin-left: 10px;
+}
+
+.my-profile-btn {
+    width: 100px;
+    height: 50px;
+    margin-top: 10px;
+    margin-left: 10px;
+    background-color: #15133C;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
