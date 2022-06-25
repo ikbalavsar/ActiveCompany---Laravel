@@ -73,16 +73,17 @@
 
             </div>
 
-            <div class="my-profile">
-                <img src="img/profile.png" alt="Profile Picture" class="profile-picture">
-                <span style="font-size: 15px; padding-top: 5px; padding-left: 10px;">ID : 64180012 <br>Job Description:
-                    Developer</span>
+            <form method="POST" class="my-profile" action="{{ route('update_profile') }}">
+            @csrf
+                <img src="img/avatar.svg" alt="Profile Picture" class="profile-picture">
+                <span style="font-size: 15px; padding-top: 5px; padding-left: 10px;">ID : {{auth()->user()->id}} <br>Job Description:
+                {{auth()->user()->job_type}}</span>
 
-
+                <input style="display:none;" type="text" name="user_id" value="{{auth()->user()->id}}">
                 <label for="my-profile-name" class="my-profile-label">First Name & Last Name</label>
-                <input type="text" placeholder="{{auth()->user()->name}}" class="my-profile-input" name="my-profile-name" required>
+                <input type="text" value="{{auth()->user()->name}}" class="my-profile-input" name="my-profile-name" required>
                 <label for="my-profile-mail" class="my-profile-label">Email</label>
-                <input type="email" placeholder="{{auth()->user()->email}} " class="my-profile-input" name="my-profile-mail" required>
+                <input type="email" value="{{auth()->user()->email}} " class="my-profile-input" name="my-profile-mail" required>
                 <p>*This e-mail is your login username,so it is required.</p>
 
                 <label for="my-profile-password" class="my-profile-label">Change Password</label>
@@ -91,7 +92,7 @@
 
                 <button class="my-profile-btn" onclick="window.location.href = '/' ">Save Changes</button>
 
-            </div>
+            </form>
 
         </div>
     </div>

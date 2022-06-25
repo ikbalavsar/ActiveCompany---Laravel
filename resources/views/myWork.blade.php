@@ -77,35 +77,119 @@
 
             <div class="col-9 p-4 project-cards-detailed">
                 <div class="card-content-detailed">
-                    <p style="font-size: 25px; font-weight: bolder; border-bottom: solid 2px black;">Tasks
-                    </p>
                     @if(auth()->user()->job_type != 'Manager')
                     <div class="tasks-list">
                         <ul class="tasks-list-list">
+                            @php
+                            $p = 0;
+                            $t = 0;
+                            @endphp
 
+                            @if($p == 0)
+                            <p style="font-size: 25px; font-weight: bolder; border-bottom: solid 2px black;">Tasks
+                            </p>
+                            @php
+                            $p = 1
+                            @endphp
+                            @endif
                             @foreach($tasks as $task)
+                            @if($task->status == "Active")
                             <li class="task-item">
                                 <a href="/taskDetailed/{{$task->id}}" class="tasks">{{$task->title}}</a>
 
                                 <span style="color: green;">{{$task->status}}</span>
+                                <form method="POST" action="{{ route('done_task') }}" >
+                                    @csrf
+                                    <input style="display:none;" type="text" name="task_id" value="{{$task->id}}">
+                                    <button name="done_btn" class="btn btn-outline-success">Done</button>
+                                </form>
+                                
 
 
                             </li>
+                            @endif
+                            @endforeach
+
+                            @if($t == 0)
+                            <p style="font-size: 25px; font-weight: bolder; border-bottom: solid 2px black;">Completed Tasks
+                            </p>
+                            @php
+                            $t = 1
+                            @endphp
+                            @endif
+                            @foreach($tasks as $task)
+                            @if($task->status == "Done")
+                            <li class="task-item">
+                                <a href="/taskDetailed/{{$task->id}}" class="tasks">{{$task->title}}</a>
+
+                                <span style="color: green;">{{$task->status}}</span>
+                                <form method="POST" action="{{ route('done_task') }}" >
+                                    @csrf
+                                    <input style="display:none;" type="text" name="task_id" value="{{$task->id}}">
+                                    <button name="done_btn" class="btn btn-outline-success">Done</button>
+                                </form>
+                                
+
+
+                            </li>
+                            @endif
                             @endforeach
                         </ul>
                     </div>
                     @else
                     <div class="tasks-list">
                         <ul class="tasks-list-list">
-
+                            @php
+                            $p = 0;
+                            $t = 0;
+                            @endphp
+                            @if($p == 0)
+                            <p style="font-size: 25px; font-weight: bolder; border-bottom: solid 2px black;">Your Projects
+                            </p>
+                            @php
+                            $p = 1
+                            @endphp
+                            @endif
                             @foreach($projects as $project)
+                            @if($project->status == "In Progress")
                             <li class="task-item">
                                 <a href="/seeDetails/{{$project->id}}" class="tasks">{{$project->title}}</a>
 
                                 <span style="color: green;">{{$project->status}}</span>
-
+                                <form method="POST" action="{{ route('done_project') }}" >
+                                    @csrf
+                                    <input style="display:none;" type="text" name="project_id" value="{{$project->id}}">
+                                    <button name="done_btn" class="btn btn-outline-success">Done</button>
+                                </form>
                             </li>
+                            @endif
                             @endforeach
+                            
+
+                            @if($t == 0)
+                            <p style="font-size: 25px; font-weight: bolder; border-bottom: solid 2px black;">Your Completed Projects 
+                            </p>
+                            @php
+                            $t = 1
+                            @endphp
+                            @endif
+                            @foreach($projects as $project)
+                            @if($project->status == "Completed")
+                            <li class="task-item">
+                                <a href="/seeDetails/{{$project->id}}" class="tasks">{{$project->title}}</a>
+
+                                <span style="color: green;">{{$project->status}}</span>
+                                <form method="POST" action="{{ route('done_project') }}" >
+                                    @csrf
+                                    <input style="display:none;" type="text" name="project_id" value="{{$project->id}}">
+                                    <input style="display:none;" type="text" name="type" value="in_progress">
+                                    <button name="done_btn" class="btn btn-outline-warning">In Progress</button>
+                                </form>
+                            </li>
+                            @endif
+                            @endforeach
+
+
                         </ul>
                     </div>
                     @endif

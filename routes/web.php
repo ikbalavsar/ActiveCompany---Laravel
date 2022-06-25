@@ -48,6 +48,51 @@ Route::get('/myProfile',function (){
     return view('myProfile');
 });
 
+//Emre tarafından eklendi
+Route::post('/myProfile/',function (Request $request){
+    if(auth()->user()){
+        $new_name = $request->input('my-profile-name');
+        $new_mail = $request->input('my-profile-mail');
+        $new_password = $request->input('my-profile-password');
+        $user_id = auth()->user()->id;
+        DB::update("update users set name = '$new_name',email = '$new_mail', password = '$new_password' where id = $user_id");
+        return redirect('myProfile');
+    }else{
+        return redirect('login');
+    }
+})->name('update_profile');;
+
+Route::post('/myWork/',function (Request $request){
+    if(auth()->user()){
+        $task_id = $request->input('task_id');
+        DB::update("update task set status = 'Done' where id = $task_id");
+        return redirect('myWork');
+    }else{
+        return redirect('login');
+    }
+})->name('done_task');
+
+
+
+Route::post('/myWork/',function (Request $request){
+    if(auth()->user()){
+        $project_id = $request->input('project_id');
+        if($request->input('type') == "in_progress") {
+            DB::update("update project set status = 'In Progress' where id = $project_id");
+        } else {
+            DB::update("update project set status = 'Completed' where id = $project_id");
+        }
+        return redirect('myWork');
+    }else{
+        return redirect('login');
+    }
+})->name('done_project');
+
+
+
+
+// END
+
 Route::get('/seeDetails/{id}',function ($id){
     $project = DB::select("select * from project where id=$id");
     $project_model = $project[0];

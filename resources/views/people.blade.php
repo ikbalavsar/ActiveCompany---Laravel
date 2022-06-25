@@ -86,7 +86,7 @@
                         @foreach(array_chunk($managers, 3) as $chunk)
                         @foreach($chunk as $person)
                         <div class="project-members-info">
-                            <img src="img/man.png" alt="Project Member" class="project-members-info-img">
+                            <img src="img/avatar.svg" alt="Project Member" class="project-members-info-img">
                             <p>{{$person->name}} <br>{{$person->email}}</p>
                         </div>
                         @endforeach
@@ -102,7 +102,7 @@
                         @foreach(array_chunk($developers, 3) as $chunk)
                         @foreach($chunk as $person)
                         <div class="project-members-info">
-                            <img src="img/girl.png" alt="Project Member" class="project-members-info-img">
+                            <img src="img/avatar.svg" alt="Project Member" class="project-members-info-img">
                             <p>{{$person->name}} <br>{{$person->email}}</p>
                         </div>
                         @endforeach
@@ -117,7 +117,7 @@
                         @foreach(array_chunk($analyst, 3) as $chunk)
                         @foreach($chunk as $person)
                         <div class="project-members-info">
-                            <img src="img/girl.png" alt="Project Member" class="project-members-info-img">
+                            <img src="img/avatar.svg" alt="Project Member" class="project-members-info-img">
                             <p>{{$person->name}} <br>{{$person->email}}</p>
                         </div>
                         @endforeach

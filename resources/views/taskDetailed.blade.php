@@ -91,7 +91,7 @@
                     </div>
                     <hr>
                     <div style="display:flex;">
-                        <p class="d-flex align-items-center mb-0" style="font-size:20px ; padding: 0 12px; margin-bottom:0;">Project Description:</p>
+                        <p class="d-flex align-items-center mb-0" style="font-size:20px ; padding: 0 12px; margin-bottom:0;">Task Description:</p>
                         <p class="project-info mb-0">
                             {{$task[0]->description}}
                         </p>
@@ -102,7 +102,7 @@
 
                     @foreach($all_feedback as $user)
                     <div class="tasks-updates-info">
-                        <img src="{{asset('img/man.png')}}" alt="Team Member" class="tasks-updates-info-img">
+                        <img src="{{asset('img/avatar.svg')}}" alt="Team Member" class="tasks-updates-info-img">
                         <h3>{{$user['assigned_user']}}</h3>
                         <p class="tasks-updates-info-p">{{$user['feedback']}}</p>
                     </div>
@@ -124,7 +124,6 @@
                                 <button type="submit" class="btn-signin">
                                     {{ __('Update Feedback') }}
                                 </button>
-
                             </div>
                         </div>
                     </form>

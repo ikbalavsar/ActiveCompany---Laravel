@@ -95,7 +95,7 @@
                         @foreach($chunk as $person)
                         <div class="project-members-info choose-team">
                             <input name="persons[]" type="checkbox" value="{{$person->id}}">
-                            <img src="{{asset('img/girl.png')}}" alt="Project Member" class="project-members-info-img">
+                            <img src="{{asset('img/avatar.svg')}}" alt="Project Member" class="project-members-info-img">
                             <p>{{$person->name}} <br> {{$person->role}}</p>
                         </div>
                         @endforeach

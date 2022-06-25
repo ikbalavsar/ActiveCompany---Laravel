@@ -123,7 +123,7 @@
 
                         @foreach($assigned_person as $person)
                         <div class="project-members-info">
-                            <img src="{{asset('img/girl.png')}}" alt="Project Member" class="project-members-info-img">
+                            <img src="{{asset('img/avatar.svg')}}" alt="Project Member" class="project-members-info-img">
                             <p>{{$person->name}}</p>
                         </div>
                         @endforeach
