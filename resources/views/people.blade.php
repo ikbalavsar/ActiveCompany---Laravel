@@ -20,16 +20,17 @@
 
 
     <div class="logo-box header">
-        <a href="/"><img src="img/logo.png" alt="Logo" class="logo-header"></a>
-        <h1 class="section-name">People</h1>
-
+        <a href="/projects"><img src="{{asset('img/logo.png')}}" alt="Logo" class="logo-header"></a>
+        <h1 class="section-name">Projects</h1>
+        <a href="/completedProjects" class="completed-projects">Completed Projects</a>
         <form method="POST" action="{{ route('search') }}" class="search">
+            @csrf
+            <a href="/createProject" style="display: @if(auth()->user()->job_type!='Manager') none @endif" class="create-link">Create New Project</a>
             <input type="text" placeholder="Search" name="search" class="search-text">
-            <button type="submit">Search</button>
+            <button class="position-absolute" style="height: 40px; background: none;border:none;margin-right: 15px; cursor: pointer;" type="submit"><img src="{{asset('img/search.svg')}}" alt="search icon"></button>
         </form>
-        <a href="/myProfile"><img src="img/avatar.svg" alt="Profile" class="profile find-help" title="Profile"></a>
+        <a href="/myProfile"><img src="{{asset('img/avatar.svg')}}" alt="Profile" class="profile find-help" title="Profile"></a>
         <p class="text-light d-inline" style="font-size: 16px; font-weight:bold;">{{ auth()->user()->name }} <br><span style="font-size: 12px; font-weight:normal;"> {{ auth()->user()->job_type }}</span></p>
-    </div>
     </div>
 
 
@@ -40,42 +41,40 @@
 
                 <nav class="nav-bar-items">
                     <ul>
-                        <li class="items">
+
+                        <li class="items" style="cursor: pointer;">
                             <a href="/" class="nav-bar-link"><img src="img/project.png" alt="Project" class="nav-bar-icon"><span class="nav-bar-text">
                                     Projects
                                 </span></a>
                         </li>
 
-                        <li class="items">
+                        <li class="items" style="cursor: pointer;" onclick="window.location.href = '/myWork' ">
                             <a href="/myWork" class="nav-bar-link"><img src="img/myWork.png" alt="My Work" class="nav-bar-icon"><span class="nav-bar-text">
                                     My Work
                                 </span></a>
                         </li>
 
-                        <li class="items">
+                        <li class="items" style="cursor: pointer;" onclick="window.location.href = '/people' ">
                             <a href="/people" class="nav-bar-link"><img src="img/ekip.png" alt="People" class="nav-bar-icon"><span class="nav-bar-text">
                                     People
                                 </span></a>
                         </li>
 
-                        <li class="items">
-                            <a class="nav-bar-link" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
+                        <a class="nav-bar-link" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                     document.getElementById('logout-form').submit();">
+                            <li class="items">
                                 <img src="img/logout.png" alt="Log Out" class="nav-bar-icon"><span class="nav-bar-text">
                                     Log out
                                 </span>
-                            </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        </li>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </li>
+                        </a>
                     </ul>
                 </nav>
 
             </div>
-
-
-
             <div class="col-9 p-4 ">
                 <div class="card-content-detailed">
                     <div class="project-members">
