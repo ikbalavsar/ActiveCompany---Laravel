@@ -121,26 +121,7 @@
         </div>
     </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     <script src="js/star.js"></script>
-
-
-
 
 
 

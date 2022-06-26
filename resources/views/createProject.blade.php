@@ -20,18 +20,16 @@
 
 
     <div class="logo-box header">
-        <a href="/projects"><img src="img/logo.png" alt="Logo" class="logo-header"></a>
-        <h1 class="section-name completed-projects">Create New Project</h1>
-
+        <a href="/projects"><img src="{{asset('img/logo.png')}}" alt="Logo" class="logo-header"></a>
+        <h1 class="section-name"> All Projects</h1>
         <form method="POST" action="{{ route('search') }}" class="search">
             @csrf
-
+            <a href="/createProject" style="display: @if(auth()->user()->job_type!='Manager') none @endif" class="create-link">Create New Project</a>
             <input type="text" placeholder="Search" name="search" class="search-text">
-            <button type="submit"><img src="{{asset('img/search.svg')}}" alt="search icon"></button>
+            <button class="position-absolute" style="height: 40px; background: none;border:none;margin-right: 15px; cursor: pointer;" type="submit"><img src="{{asset('img/search.svg')}}" alt="search icon"></button>
         </form>
-    </div>
-    <a href="/myProfile"><img src="img/avatar.svg" alt="Profile" class="profile find-help" title="Profile"></a>
-    <p class="text-light d-inline" style="font-size: 16px; font-weight:bold;">{{ auth()->user()->name }} <br><span style="font-size: 12px; font-weight:normal;"> {{ auth()->user()->job_type }}</span></p>
+        <a href="/myProfile"><img src="{{asset('img/avatar.svg')}}" alt="Profile" class="profile find-help" title="Profile"></a>
+        <p class="text-light d-inline" style="font-size: 16px; font-weight:bold;">{{ auth()->user()->name }} <br><span style="font-size: 12px; font-weight:normal;"> {{ auth()->user()->job_type }}</span></p>
     </div>
 
 

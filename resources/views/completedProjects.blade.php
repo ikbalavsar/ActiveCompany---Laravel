@@ -20,20 +20,17 @@
 
 
     <div class="logo-box header">
-        <a href="/"><img src="img/logo.png" alt="Logo" class="logo-header"></a>
-        <h1 class="section-name completed-projects">Completed Projects</h1>
-        <a href="/" class="completed-projects">Active Projects</a>
+        <a href="/projects"><img src="{{asset('img/logo.png')}}" alt="Logo" class="logo-header"></a>
+        <h1 class="section-name"> All Projects</h1>
         <form method="POST" action="{{ route('search') }}" class="search">
             @csrf
-
+            <a href="/createProject" style="display: @if(auth()->user()->job_type!='Manager') none @endif" class="create-link">Create New Project</a>
             <input type="text" placeholder="Search" name="search" class="search-text">
-            <button type="submit"><img src="{{asset('img/search.svg')}}" alt="search icon"></button>
+            <button class="position-absolute" style="height: 40px; background: none;border:none;margin-right: 15px; cursor: pointer;" type="submit"><img src="{{asset('img/search.svg')}}" alt="search icon"></button>
         </form>
-        <a href="/myProfile"><img src="img/avatar.svg" alt="Profile" class="profile find-help" title="Profile"></a>
+        <a href="/myProfile"><img src="{{asset('img/avatar.svg')}}" alt="Profile" class="profile find-help" title="Profile"></a>
         <p class="text-light d-inline" style="font-size: 16px; font-weight:bold;">{{ auth()->user()->name }} <br><span style="font-size: 12px; font-weight:normal;"> {{ auth()->user()->job_type }}</span></p>
     </div>
-    </div>
-
 
     <div class="container">
 
@@ -76,42 +73,49 @@
                 </nav>
 
             </div>
+            <div class="col-9">
+                @foreach(array_chunk($projects, 3) as $chunk)
+                @foreach($chunk as $project)
 
+                <div class="col-12 project-cards mb-5" style="cursor: pointer;" onclick="window.location.href = '/seeDetails/{{$project->id}}' ">
+                    <div class="card-content pb-4" style="height: auto;">
+                        <h2 class="line-1">{{$project->title}}<span><img src="img/star.png" alt="Star" class="star-icon"></span></h2>
+                        <h4 class="card-info-line1">
+                            @php
+                            $project->total_time_sheet;
+                            $hour = strval(intval((($project->total_time_sheet)/60)));
+                            $min = strval(($project->total_time_sheet) % 60);
+                            @endphp
+                            Total time: <span class="alert-danger">{{$hour}}:{{$min}} </span>
+                        </h4>
 
+                        <p>
+                            {{$project->description}}
+                        </p>
 
+                        <div class="btn-1">
+                            <button class="details-btn" onclick="window.location.href = '/seeDetails/{{$project->id}}' ">See
+                                Details</button>
+                        </div>
 
-
-            @foreach(array_chunk($projects, 3) as $chunk)
-            @foreach($chunk as $project)
-            <div class="col-9 p-4 project-cards">
-                <div class="card-content">
-                    <h2 class="line-1">{{$project->title}}<span><img src="img/star.png" alt="Star" class="star-icon"></span></h2>
-                    <h4 class="card-info-line1">
-                        Total time: <span class="alert-danger">{{$project->total_time_sheet}} </span>
-                    </h4>
-
-                    <p>
-                        {{$project->description}}
-                    </p>
-
-                    <div class="btn-1">
-                        <span style="color: grey;">Completed</span>
 
                     </div>
 
-
                 </div>
-
+                @endforeach
+                @endforeach
             </div>
-            @endforeach
-            <div class="w-100"></div>
 
-            <div class="col-sm-1" style="margin-left: 17px;"></div>
-            @endforeach
+
+
+
+
+
+
+
 
         </div>
     </div>
-
 
 
 </body>
