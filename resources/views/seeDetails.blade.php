@@ -104,7 +104,7 @@
                                     assigned to <b>{{$task['count_of_person']}}</b> Employee
                                 </span>
 
-                                <span style="color: @if($task['status'] == 'Active')green @else red @endif;">{{$task['status']}}</span>
+                                <span style="color: @if($task['status'] == 'Done')green @else orange @endif;">{{$task['status']}}</span>
 
 
                             </li>

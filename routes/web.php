@@ -61,7 +61,7 @@ Route::post('/myProfile/',function (Request $request){
         return redirect('login');
     }
 })->name('update_profile');;
-
+/*
 Route::post('/myWork/',function (Request $request){
     if(auth()->user()){
         $task_id = $request->input('task_id');
@@ -71,22 +71,40 @@ Route::post('/myWork/',function (Request $request){
         return redirect('login');
     }
 })->name('done_task');
-
-
-
-Route::post('/myWork/',function (Request $request){
+*/
+Route::post('',function (Request $request){
     if(auth()->user()){
-        $project_id = $request->input('project_id');
-        if($request->input('type') == "in_progress") {
-            DB::update("update project set status = 'In Progress' where id = $project_id");
-        } else {
-            DB::update("update project set status = 'Completed' where id = $project_id");
-        }
+        $keyword = $request->input('search');
+        $result = DB::select("Select * from task where title like '%$keyword%' ");
+
         return redirect('myWork');
     }else{
         return redirect('login');
     }
-})->name('done_project');
+})->name('search');
+
+Route::post('/myWork/',function (Request $request){
+    if(auth()->user()){
+        
+        if($request->input('type') == "in_progress_project") {
+            $project_id = $request->input('project_id');
+            DB::update("update project set status = 'In Progress' where id = $project_id");
+        } elseif($request->input('type') == "done_project") {
+            $project_id = $request->input('project_id');
+            DB::update("update project set status = 'Completed' where id = $project_id");
+        } elseif($request->input('type') == "in_progress_task") {
+            $task_id = $request->input('task_id');
+            DB::update("update task set status = 'In Progress' where id = $task_id");
+        } elseif($request->input('type') == "done_task") {
+            $task_id = $request->input('task_id');
+            $task_time = $request->input('time_sheet');
+            DB::update("update task set status = 'Done' where id = $task_id");
+        } 
+        return redirect('myWork');
+    }else{
+        return redirect('login');
+    }
+})->name('update_task');
 
 
 

@@ -22,9 +22,9 @@
     <div class="logo-box header">
         <a href="/"><img src="img/logo.png" alt="Logo" class="logo-header"></a>
         <h1 class="section-name">My Work</h1>
-        <div class="search">
-            <input type="text" placeholder="Search" class="search-text">
-            <img src="img/search.png" alt="Search" class="search-icon">
+        <form method="POST" action="{{ route('search') }}" class="search">
+            <input type="text" placeholder="Search" name="search" class="search-text">
+            <button type="submit" >Search</button>
         </div>
         <a href="#"><img src="img/help.png" alt="Find Help" class="find-help" title="Find Help"></a>
         <a href="/myProfile"><img src="img/profile.png" alt="Profile" class="profile find-help" title="Profile"></a>
@@ -93,14 +93,16 @@
                             @endphp
                             @endif
                             @foreach($tasks as $task)
-                            @if($task->status == "Active")
+                            @if($task->status == "In Progress")
                             <li class="task-item">
                                 <a href="/taskDetailed/{{$task->id}}" class="tasks">{{$task->title}}</a>
 
-                                <span style="color: green;">{{$task->status}}</span>
-                                <form method="POST" action="{{ route('done_task') }}" >
+                                <span style="color: orange;">{{$task->status}}</span>
+                                <form method="POST" action="{{ route('update_task') }}" >
                                     @csrf
+                                    <input style="display:none;" type="text" name="type" value="done_task">
                                     <input style="display:none;" type="text" name="task_id" value="{{$task->id}}">
+                                    <input type="time" name="time_sheet" required>
                                     <button name="done_btn" class="btn btn-outline-success">Done</button>
                                 </form>
                                 
@@ -123,10 +125,11 @@
                                 <a href="/taskDetailed/{{$task->id}}" class="tasks">{{$task->title}}</a>
 
                                 <span style="color: green;">{{$task->status}}</span>
-                                <form method="POST" action="{{ route('done_task') }}" >
+                                <form method="POST" action="{{ route('update_task') }}" >
                                     @csrf
+                                    <input style="display:none;" type="text" name="type" value="in_progress_task">
                                     <input style="display:none;" type="text" name="task_id" value="{{$task->id}}">
-                                    <button name="done_btn" class="btn btn-outline-success">Done</button>
+                                    <button name="done_btn" class="btn btn-outline-warning">In Progress</button>
                                 </form>
                                 
 
@@ -155,10 +158,11 @@
                             <li class="task-item">
                                 <a href="/seeDetails/{{$project->id}}" class="tasks">{{$project->title}}</a>
 
-                                <span style="color: green;">{{$project->status}}</span>
-                                <form method="POST" action="{{ route('done_project') }}" >
+                                <span style="color: orange;">{{$project->status}}</span>
+                                <form method="POST" action="{{ route('update_task') }}" >
                                     @csrf
                                     <input style="display:none;" type="text" name="project_id" value="{{$project->id}}">
+                                    <input style="display:none;" type="text" name="type" value="done_project">
                                     <button name="done_btn" class="btn btn-outline-success">Done</button>
                                 </form>
                             </li>
@@ -179,10 +183,10 @@
                                 <a href="/seeDetails/{{$project->id}}" class="tasks">{{$project->title}}</a>
 
                                 <span style="color: green;">{{$project->status}}</span>
-                                <form method="POST" action="{{ route('done_project') }}" >
+                                <form method="POST" action="{{ route('update_task') }}" >
                                     @csrf
                                     <input style="display:none;" type="text" name="project_id" value="{{$project->id}}">
-                                    <input style="display:none;" type="text" name="type" value="in_progress">
+                                    <input style="display:none;" type="text" name="type" value="in_progress_project">
                                     <button name="done_btn" class="btn btn-outline-warning">In Progress</button>
                                 </form>
                             </li>

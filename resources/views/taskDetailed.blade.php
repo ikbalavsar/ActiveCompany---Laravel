@@ -85,7 +85,7 @@
                         <p class="mb-0">Project ID: {{$project[0]->id}}</p>
                         <p class="mb-0">Task ID: {{$task[0]->id}}</p>
                         <p class="mb-0">Created Date: {{substr($task[0]->created_at,0,10)}}</p>
-                        <p class="mb-0">Status: <span style="color: @if($task[0]->status == 'Active')green @else red @endif;"> {{$task[0]->status}}</span> </p>
+                        <p class="mb-0">Status: <span style="color: @if($task[0]->status == 'Done')green @else red @endif;"> {{$task[0]->status}}</span> </p>
                         <p class="mb-0">Due Date : {{substr($task[0]->due_date,0,10)}}</p>
 
                     </div>
