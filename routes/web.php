@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Crypt;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect('/login');
 });
+
 Route::get('/projects', function () {
     $projects = DB::select("select * from project where status = 'In Progress'");
     return view('projects', ['projects' => $projects]);
@@ -61,17 +63,7 @@ Route::post('/myProfile/', function (Request $request) {
         return redirect('login');
     }
 })->name('update_profile');;
-/*
-Route::post('/myWork/',function (Request $request){
-    if(auth()->user()){
-        $task_id = $request->input('task_id');
-        DB::update("update task set status = 'Done' where id = $task_id");
-        return redirect('myWork');
-    }else{
-        return redirect('login');
-    }
-})->name('done_task');
-*/
+
 Route::post('', function (Request $request) {
     if (auth()->user()) {
         $keyword = $request->input('search');
@@ -201,7 +193,7 @@ Route::post('/addTask', function (Request $request) {
     $persons = $request->input('persons');
     $time = date('Y-m-d H:i:s');
 
-    DB::insert("insert into task (title,time_sheet,description,due_date,status,created_at,updated_at) values ('$task_title',0,'$task_description','$task_duedate','Active','$time','$time') ");
+    DB::insert("insert into task (title,time_sheet,description,due_date,status,created_at,updated_at) values ('$task_title',0,'$task_description','$task_duedate','In Progress','$time','$time') ");
     $new_task_id = DB::select("select MAX(id) as id from task");
     $insert_id = $new_task_id[0]->id;
     DB::insert("insert into belongs_to (project_id,task_id) values ($project_id,$insert_id)");

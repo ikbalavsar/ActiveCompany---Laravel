@@ -1,16 +1,19 @@
 @extends('layouts.app')
-
+<style>
+    html {
+        overflow: hidden;
+    }
+</style>
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Register') }}</div>
+        <div class="col-md-12 vh-100 d-flex align-items-center" style="background: transparent;">
+            <div class="card" style="background: transparent; border: none;">
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('register') }}">
+                <div class="card-body signin m-0" style="height: auto;">
+                    <form class="w-100" style="font-size:18px;" method="POST" action="{{ route('register') }}">
                         @csrf
-
+                        <h2 class="text-center">Register</h2>
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
 
@@ -18,9 +21,9 @@
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
                                 @error('name')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
                         </div>
@@ -32,9 +35,9 @@
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
                                 @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
                         </div>
@@ -44,9 +47,8 @@
 
                             <div class="col-md-6">
 
-                                <select name="job_type" id="job-type" class="form-control" required >
-                                    <option value="Employee" selected>Employee</option>
-                                    <option value="Manager">Manager</option>
+                                <select name="job_type" id="job-type" class="form-control" required>
+                                    <option value="Manager" selected>Manager</option>
                                     <option value="Analyst">Analyst</option>
                                     <option value="Developer">Developer</option>
                                 </select>
@@ -61,9 +63,9 @@
                                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
 
                                 @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
                                 @enderror
                             </div>
                         </div>

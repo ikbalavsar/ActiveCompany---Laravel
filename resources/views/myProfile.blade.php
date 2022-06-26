@@ -92,7 +92,6 @@
                 <label for="my-profile-password" class="my-profile-label">Change Password</label>
                 <input type="password" class="my-profile-input" name="my-profile-password">
 
-
                 <button class="my-profile-btn" onclick="window.location.href = '/' ">Save Changes</button>
 
             </form>

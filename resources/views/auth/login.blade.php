@@ -49,17 +49,7 @@
                     </div>
                 </div>
 
-                <div class="form-group row">
-                    <div class="col-12 p-0 d-flex justify-content-end">
-                        <div class="form-check d-flex align-items-center">
-                            <input class="form-check-input position-static m-0" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
-                            <label class="form-check-label" for="remember">
-                                {{ __('Remember Me') }}
-                            </label>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="form-group row mb-0">
                     <div class="">
