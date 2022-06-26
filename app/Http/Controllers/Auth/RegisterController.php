@@ -57,7 +57,7 @@ class RegisterController extends Controller
             'password' => ['required', 'string', 'min:2', 'confirmed'],
         ]);
     }
-        //TO-DO ikbal
+    //TO-DO ikbal
     /**
      * Create a new user instance after a valid registration.
      *
@@ -74,11 +74,11 @@ class RegisterController extends Controller
         ]);
         $time = date('Y-m-d H:i:s');
         $last_user = DB::table('users')->latest('id')->first();
-        if($data['job_type'] == 'Manager'){
+        if ($data['job_type'] == 'Manager') {
             DB::insert("insert into manager (id,created_at,updated_at) values ($last_user->id,'$time','$time')");
-        }else if($data['job_type'] == 'Developer'){
+        } else if ($data['job_type'] == 'Developer') {
             DB::insert("insert into developer (id,type) values ($last_user->id,'empty')");
-        }else if($data['job_type'] == 'Analyst'){
+        } else if ($data['job_type'] == 'Analyst') {
             DB::insert("insert into analyst (id,created_at,updated_at) values ($last_user->id,'$time','$time')");
         }
         return User::find($last_user->id);

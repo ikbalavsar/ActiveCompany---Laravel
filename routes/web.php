@@ -18,46 +18,46 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect('/login');
 });
-Route::get('/projects', function (){
+Route::get('/projects', function () {
     $projects = DB::select("select * from project where status = 'In Progress'");
-   return view('projects',['projects'=>$projects]);
+    return view('projects', ['projects' => $projects]);
 });
 
-Route::get('/myWork', function (){
+Route::get('/myWork', function () {
     $user_id = auth()->user()->id;
     $tasks = DB::select("select * from task where id in (select task_id from user_belongs_to_task where user_id = $user_id)");
     $projects = DB::select("select * from project where id in(select project_id from manages where manager_id = $user_id)");
-    return view('myWork',['tasks' => $tasks,'projects'=>$projects]);
+    return view('myWork', ['tasks' => $tasks, 'projects' => $projects]);
 });
 
-Route::get('/completedProjects',function (){
+Route::get('/completedProjects', function () {
     $projects = DB::select("select * from project where status = 'Completed'");
 
-    return view('completedProjects',['projects' => $projects]);
+    return view('completedProjects', ['projects' => $projects]);
 });
 
-Route::get('/people',function (){
+Route::get('/people', function () {
     $analyst = DB::select("select *,'Analyst' as role from users where id in (select id from analyst)");
     $developers = DB::select("select *,'Developer' as role from users where id in(select id from developer)");
     $managers = DB::select("select *,'Manager' as role from users where id in (select id from manager)");
 
-    return view('people',['analyst'=>$analyst,'developers'=>$developers,'managers'=>$managers]);
+    return view('people', ['analyst' => $analyst, 'developers' => $developers, 'managers' => $managers]);
 });
 
-Route::get('/myProfile',function (){
+Route::get('/myProfile', function () {
     return view('myProfile');
 });
 
 //Emre tarafından eklendi
-Route::post('/myProfile/',function (Request $request){
-    if(auth()->user()){
+Route::post('/myProfile/', function (Request $request) {
+    if (auth()->user()) {
         $new_name = $request->input('my-profile-name');
         $new_mail = $request->input('my-profile-mail');
         $new_password = $request->input('my-profile-password');
         $user_id = auth()->user()->id;
         DB::update("update users set name = '$new_name',email = '$new_mail', password = '$new_password' where id = $user_id");
         return redirect('myProfile');
-    }else{
+    } else {
         return redirect('login');
     }
 })->name('update_profile');;
@@ -72,36 +72,35 @@ Route::post('/myWork/',function (Request $request){
     }
 })->name('done_task');
 */
-Route::post('',function (Request $request){
-    if(auth()->user()){
+Route::post('', function (Request $request) {
+    if (auth()->user()) {
         $keyword = $request->input('search');
         $result = DB::select("Select * from task where title like '%$keyword%' ");
-
-        return redirect('myWork');
-    }else{
+        return view('searchResult', ['result' => $result]);
+    } else {
         return redirect('login');
     }
 })->name('search');
 
-Route::post('/myWork/',function (Request $request){
-    if(auth()->user()){
-        
-        if($request->input('type') == "in_progress_project") {
+Route::post('/myWork/', function (Request $request) {
+    if (auth()->user()) {
+
+        if ($request->input('type') == "in_progress_project") {
             $project_id = $request->input('project_id');
             DB::update("update project set status = 'In Progress' where id = $project_id");
-        } elseif($request->input('type') == "done_project") {
+        } elseif ($request->input('type') == "done_project") {
             $project_id = $request->input('project_id');
             DB::update("update project set status = 'Completed' where id = $project_id");
-        } elseif($request->input('type') == "in_progress_task") {
+        } elseif ($request->input('type') == "in_progress_task") {
             $task_id = $request->input('task_id');
             DB::update("update task set status = 'In Progress' where id = $task_id");
-        } elseif($request->input('type') == "done_task") {
+        } elseif ($request->input('type') == "done_task") {
             $task_id = $request->input('task_id');
             $task_time = $request->input('time_sheet');
             DB::update("update task set status = 'Done' where id = $task_id");
-        } 
+        }
         return redirect('myWork');
-    }else{
+    } else {
         return redirect('login');
     }
 })->name('update_task');
@@ -111,13 +110,13 @@ Route::post('/myWork/',function (Request $request){
 
 // END
 
-Route::get('/seeDetails/{id}',function ($id){
+Route::get('/seeDetails/{id}', function ($id) {
     $project = DB::select("select * from project where id=$id");
     $project_model = $project[0];
     $tasks = DB::select("select * from task where id in (select task_id from belongs_to where project_id = $project_model->id)");
     $all_task_and_user = [];
     $assigned_person = DB::select("select * from users where id in (select user_id from user_belongs_to_project where project_id = $project_model->id)");
-    for($i = 0; $i < count($tasks);$i++){
+    for ($i = 0; $i < count($tasks); $i++) {
         $task_id = $tasks[$i]->id;
         $person = DB::select("select * from users where id in (select user_id from user_belongs_to_task where task_id = $task_id)");
 
@@ -127,19 +126,18 @@ Route::get('/seeDetails/{id}',function ($id){
             'task_id' => $tasks[$i]->id,
             'count_of_person' => count($person)
         ];
-
     }
-    return view('seeDetails',['project'=>$project_model,'tasks'=>$all_task_and_user,'assigned_person'=>$assigned_person]);
+    return view('seeDetails', ['project' => $project_model, 'tasks' => $all_task_and_user, 'assigned_person' => $assigned_person]);
 });
 
-Route::get('/taskDetailed/{id}',function ($id){
+Route::get('/taskDetailed/{id}', function ($id) {
     $task = DB::select("Select * from task where id = $id");
     $project = DB::select("select * from project where id = (select project_id from belongs_to where task_id = $id)");
     $assigned_user = DB::select("select * from users where id in(select user_id from user_belongs_to_task where task_id = $id )");
     $boolean_flag = 0;
     $all_feedback = [];
-    for($i = 0 ; $i < count($assigned_user);$i++){
-        if(auth()->user()->id == $assigned_user[$i]->id){
+    for ($i = 0; $i < count($assigned_user); $i++) {
+        if (auth()->user()->id == $assigned_user[$i]->id) {
             $boolean_flag = 1;
         }
         $assign_id = $assigned_user[$i]->id;
@@ -149,29 +147,28 @@ Route::get('/taskDetailed/{id}',function ($id){
             'feedback' => $feedback[0]->feedback
         ];
     }
-    return view('taskDetailed',['task' => $task, 'project' => $project, 'all_feedback' => $all_feedback, 'boolean_flag' => $boolean_flag]);
+    return view('taskDetailed', ['task' => $task, 'project' => $project, 'all_feedback' => $all_feedback, 'boolean_flag' => $boolean_flag]);
 });
-Route::post('/taskDetailed/',function (Request $request){
-    if(auth()->user()){
+Route::post('/taskDetailed/', function (Request $request) {
+    if (auth()->user()) {
         $task_id = $request->input('task_id');
         $feedback = $request->input('feedback');
         $user_id = auth()->user()->id;
         DB::update("update user_belongs_to_task set feedback = '$feedback' where user_id = $user_id and task_id = $task_id");
-        $url = '/taskDetailed/'.$task_id;
+        $url = '/taskDetailed/' . $task_id;
         return redirect($url);
-    }else{
+    } else {
         return redirect('login');
     }
-
 })->name('send_feedback');;
 
-Route::get('/createProject',function (){
+Route::get('/createProject', function () {
     $managers = DB::select("select *,'Manager' as role from users where id in (select id from manager)");
 
-    return view('createProject',['persons'=>$managers]);
+    return view('createProject', ['persons' => $managers]);
 });
 
-Route::post('/createProject/',function (Request $request){
+Route::post('/createProject/', function (Request $request) {
 
     $project_title = $request->input('project_title');
     $project_duedate = $request->input('project_duedate');
@@ -182,21 +179,21 @@ Route::post('/createProject/',function (Request $request){
     DB::insert("insert into project (title,total_time_sheet,status,description,due_date,created_at,updated_at) values ('$project_title',0,'In Progress','$project_description','$project_duedate','$time','$time')");
     $new_project_id = DB::select("select MAX(id) as id from project");
     $insert_id = $new_project_id[0]->id;
-    for($i = 0 ; $i < count($persons); $i++){
+    for ($i = 0; $i < count($persons); $i++) {
         DB::insert("insert into user_belongs_to_project(user_id,project_id,created_at,updated_at) values ($persons[$i],$insert_id,'$time','$time')");
         DB::insert("insert into manages (manager_id,project_id) values ($persons[$i],$insert_id)");
     }
     return redirect('/');
 })->name('createProject');
 
-Route::get('/addTask/{id}',function ($id){
+Route::get('/addTask/{id}', function ($id) {
     $analyst = DB::select("select *,'Analyst' as role from users where id in (select id from analyst)");
     $developers = DB::select("select *,'Developer' as role from users where id in(select id from developer)");
-    $persons = array_merge($analyst,$developers);
-    return view('addTask',['persons'=> $persons,'id'=>$id]);
+    $persons = array_merge($analyst, $developers);
+    return view('addTask', ['persons' => $persons, 'id' => $id]);
 });
 
-Route::post('/addTask',function (Request $request){
+Route::post('/addTask', function (Request $request) {
     $project_id = $request->input('project_id');
     $task_title = $request->input('task_title');
     $task_duedate = $request->input('task_duedate');
@@ -208,11 +205,11 @@ Route::post('/addTask',function (Request $request){
     $new_task_id = DB::select("select MAX(id) as id from task");
     $insert_id = $new_task_id[0]->id;
     DB::insert("insert into belongs_to (project_id,task_id) values ($project_id,$insert_id)");
-    for($i = 0 ; $i < count($persons); $i++){
+    for ($i = 0; $i < count($persons); $i++) {
         DB::insert("insert into user_belongs_to_task(user_id,task_id,feedback,created_at,updated_at) values ($persons[$i],$insert_id,'','$time','$time')");
         DB::insert("insert into user_belongs_to_project(user_id,project_id,created_at,updated_at) values ($persons[$i],$project_id,'$time','$time')");
     }
-    $url = '/seeDetails/'.$project_id;
+    $url = '/seeDetails/' . $project_id;
     return redirect($url);
 })->name('addTask');
 

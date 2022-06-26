@@ -20,23 +20,25 @@
 
 
     <div class="logo-box header">
-        <a href="/projects"><img src="img/logo.png" alt="Logo" class="logo-header"></a>
-        <h1 class="section-name">Projects</h1>
-        <a href="/completedProjects" class="completed-projects">Completed Projects</a>
+        <a href="/"><img src="img/logo.png" alt="Logo" class="logo-header"></a>
+        <h1 class="section-name completed-projects">Completed Projects</h1>
+        <a href="/" class="completed-projects">Active Projects</a>
         <form method="POST" action="{{ route('search') }}" class="search">
-            @csrf
-            <a href="/createProject" style="display: @if(auth()->user()->job_type!='Manager') none @endif" class="create-link">Create New Project</a>
             <input type="text" placeholder="Search" name="search" class="search-text">
             <button type="submit">Search</button>
         </form>
         <a href="/myProfile"><img src="img/avatar.svg" alt="Profile" class="profile find-help" title="Profile"></a>
         <p class="text-light d-inline" style="font-size: 16px; font-weight:bold;">{{ auth()->user()->name }} <br><span style="font-size: 12px; font-weight:normal;"> {{ auth()->user()->job_type }}</span></p>
     </div>
-
     </div>
 
 
     <div class="container">
+
+
+        <h1 class="text-center mb-3 pb-2 text-light border-bottom">
+            Search Result
+        </h1>
 
         <div class="row ">
             <div class="col-3 nav-bar">
@@ -61,7 +63,6 @@
                                 </span></a>
                         </li>
 
-
                         <li class="items">
                             <a class="nav-bar-link" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -73,69 +74,40 @@
                                 @csrf
                             </form>
                         </li>
-
                     </ul>
                 </nav>
 
             </div>
-            <div class="col-9">
-                @foreach(array_chunk($projects, 3) as $chunk)
-                @foreach($chunk as $project)
-                <div class="col-12 p-4 project-cards">
-                    <div class="card-content">
-                        <h2 class="line-1">{{$project->title}}<span><img src="img/star.png" alt="Star" class="star-icon"></span></h2>
-                        <h4 class="card-info-line1">
-                            Total time: <span class="alert-danger">{{$project->total_time_sheet}} </span>
-                        </h4>
 
-                        <p>
-                            {{$project->description}}
-                        </p>
 
-                        <div class="btn-1">
-                            <button class="details-btn" onclick="window.location.href = '/seeDetails/{{$project->id}}' ">See
-                                Details</button>
-                        </div>
 
+            @foreach(array_chunk($result, 3) as $chunk)
+            @foreach($chunk as $item)
+            <div class="col-9 p-4 project-cards" style="cursor: pointer;" onclick="window.location.href = 'seeDetails/{{$item->id}}' ">
+                <div class="card-content" style="height: 130px;">
+                    <h2 class="line-1">{{$item->title}}<span><img src="img/star.png" alt="Star" class="star-icon"></span></h2>
+                    <p>
+                        {{$item->description}}
+                    </p>
+
+                    <div class="btn-1">
+                        <span style="color: grey;">Completed</span>
 
                     </div>
 
+
+
                 </div>
-                @endforeach
-                @endforeach
+
             </div>
+            @endforeach
+            <div class="w-100"></div>
 
-
-
-
-
-
-
-
+            <div class="col-sm-1" style="margin-left: 17px;"></div>
+            @endforeach
 
         </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <script src="js/star.js"></script>
-
-
-
 
 
 
