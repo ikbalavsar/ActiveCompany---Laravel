@@ -83,6 +83,7 @@ Route::post('/myWork/', function (Request $request) {
         } elseif ($request->input('type') == "done_project") {
             $project_id = $request->input('project_id');
             DB::update("update project set status = 'Completed' where id = $project_id");
+            DB::update("update task set status = 'Done' where id in (select task_id from belongs_to where project_id = $project_id)");
         } elseif ($request->input('type') == "in_progress_task") {
             $task_id = $request->input('task_id');
             DB::update("update task set status = 'In Progress' where id = $task_id");
