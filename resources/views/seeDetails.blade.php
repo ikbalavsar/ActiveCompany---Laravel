@@ -23,13 +23,13 @@
         <a href="/projects"><img src="{{asset('img/logo.png')}}" alt="Logo" class="logo-header"></a>
         <h1 class="section-name">Projects</h1>
         <a href="/completedProjects" class="completed-projects">Completed Projects</a>
-        <form method="POST" action="{{ route('search') }}" class="search">
-            <input type="text" placeholder="Search" name="search" class="search-text">
-            <button type="submit">Search</button>
-        </form>
-        <a href="/myProfile"><img src="img/avatar.svg" alt="Profile" class="profile find-help" title="Profile"></a>
-        <p class="text-light d-inline" style="font-size: 16px; font-weight:bold;">{{ auth()->user()->name }} <br><span style="font-size: 12px; font-weight:normal;"> {{ auth()->user()->job_type }}</span></p>
-    </div>
+        <div class="search">
+            <input type="text" placeholder="Search" class="search-text">
+            <img src="{{asset('img/search.png')}}" alt="Search" class="search-icon">
+        </div>
+        <a href="#"><img src="{{asset('img/help.png')}}" alt="Find Help" class="find-help" title="Find Help"></a>
+        <a href="/myProfile"><img src="{{asset('img/profile.png')}}" alt="Profile" class="profile find-help" title="Profile"></a>
+        <a href="#"><img src="{{asset('img/notification.png')}}" alt="Notifications" class="notification find-help" title="Notifications"></a>
     </div>
 
 

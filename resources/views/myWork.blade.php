@@ -24,11 +24,11 @@
         <h1 class="section-name">My Work</h1>
         <form method="POST" action="{{ route('search') }}" class="search">
             <input type="text" placeholder="Search" name="search" class="search-text">
-            <button type="submit">Search</button>
-        </form>
-        <a href="/myProfile"><img src="img/avatar.svg" alt="Profile" class="profile find-help" title="Profile"></a>
-        <p class="text-light d-inline" style="font-size: 16px; font-weight:bold;">{{ auth()->user()->name }} <br><span style="font-size: 12px; font-weight:normal;"> {{ auth()->user()->job_type }}</span></p>
-    </div>
+            <button type="submit" >Search</button>
+        </div>
+        <a href="#"><img src="img/help.png" alt="Find Help" class="find-help" title="Find Help"></a>
+        <a href="/myProfile"><img src="img/profile.png" alt="Profile" class="profile find-help" title="Profile"></a>
+        <a href="#"><img src="img/notification.png" alt="Notifications" class="notification find-help" title="Notifications"></a>
     </div>
 
 
@@ -98,14 +98,14 @@
                                 <a href="/taskDetailed/{{$task->id}}" class="tasks">{{$task->title}}</a>
 
                                 <span style="color: orange;">{{$task->status}}</span>
-                                <form method="POST" action="{{ route('update_task') }}">
+                                <form method="POST" action="{{ route('update_task') }}" >
                                     @csrf
                                     <input style="display:none;" type="text" name="type" value="done_task">
                                     <input style="display:none;" type="text" name="task_id" value="{{$task->id}}">
                                     <input type="time" name="time_sheet" required>
                                     <button name="done_btn" class="btn btn-outline-success">Done</button>
                                 </form>
-
+                                
 
 
                             </li>
@@ -125,13 +125,13 @@
                                 <a href="/taskDetailed/{{$task->id}}" class="tasks">{{$task->title}}</a>
 
                                 <span style="color: green;">{{$task->status}}</span>
-                                <form method="POST" action="{{ route('update_task') }}">
+                                <form method="POST" action="{{ route('update_task') }}" >
                                     @csrf
                                     <input style="display:none;" type="text" name="type" value="in_progress_task">
                                     <input style="display:none;" type="text" name="task_id" value="{{$task->id}}">
                                     <button name="done_btn" class="btn btn-outline-warning">In Progress</button>
                                 </form>
-
+                                
 
 
                             </li>
@@ -159,7 +159,7 @@
                                 <a href="/seeDetails/{{$project->id}}" class="tasks">{{$project->title}}</a>
 
                                 <span style="color: orange;">{{$project->status}}</span>
-                                <form method="POST" action="{{ route('update_task') }}">
+                                <form method="POST" action="{{ route('update_task') }}" >
                                     @csrf
                                     <input style="display:none;" type="text" name="project_id" value="{{$project->id}}">
                                     <input style="display:none;" type="text" name="type" value="done_project">
@@ -168,10 +168,10 @@
                             </li>
                             @endif
                             @endforeach
-
+                            
 
                             @if($t == 0)
-                            <p style="font-size: 25px; font-weight: bolder; border-bottom: solid 2px black;">Your Completed Projects
+                            <p style="font-size: 25px; font-weight: bolder; border-bottom: solid 2px black;">Your Completed Projects 
                             </p>
                             @php
                             $t = 1
@@ -183,7 +183,7 @@
                                 <a href="/seeDetails/{{$project->id}}" class="tasks">{{$project->title}}</a>
 
                                 <span style="color: green;">{{$project->status}}</span>
-                                <form method="POST" action="{{ route('update_task') }}">
+                                <form method="POST" action="{{ route('update_task') }}" >
                                     @csrf
                                     <input style="display:none;" type="text" name="project_id" value="{{$project->id}}">
                                     <input style="display:none;" type="text" name="type" value="in_progress_project">
