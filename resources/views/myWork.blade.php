@@ -122,7 +122,7 @@
                             @endif
                             @foreach($tasks as $task)
                             @if($task->status == "Done")
-                            <li class="task-item">
+                            <li class="task-item m-0" style="width:unset;">
                                 <a href="/taskDetailed/{{$task->id}}" class="tasks">{{$task->title}}</a>
 
                                 <span style="color: green;">{{$task->status}}</span>
@@ -132,6 +132,13 @@
                                     <input style="display:none;" type="text" name="task_id" value="{{$task->id}}">
                                     <button name="done_btn" class="btn btn-outline-warning">In Progress</button>
                                 </form>
+                                @php
+                                $task->time_sheet;
+                                $hour = strval(intval((($task->time_sheet)/60)));
+                                $min = strval(($task->time_sheet) % 60);
+                                @endphp
+                                <p>Total Task Time : {{$hour}}:{{$min}}</p>
+
 
 
 

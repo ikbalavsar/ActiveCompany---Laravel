@@ -94,7 +94,6 @@ Route::post('/myWork/', function (Request $request) {
             $min = intval(substr($task_time, 3, 5));
             $task_time_minute = $hour * 60 + $min;
             $new_time = $project_time[0]->total_time_sheet + $task_time_minute;
-
             DB::update("update task set status = 'Done',time_sheet =  $task_time_minute where id = $task_id");
             DB::update("update project set total_time_sheet = $new_time where id = (select project_id from belongs_to where task_id = $task_id)");
         }

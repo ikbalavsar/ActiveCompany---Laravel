@@ -85,7 +85,12 @@
                     <div class="card-content pb-4" style="height: auto;">
                         <h2 class="line-1">{{$project->title}}<span><img src="img/star.png" alt="Star" class="star-icon"></span></h2>
                         <h4 class="card-info-line1">
-                            Total time: <span class="alert-danger">{{$project->total_time_sheet}} </span>
+                            @php
+                            $project->total_time_sheet;
+                            $hour = strval(intval((($project->total_time_sheet)/60)));
+                            $min = strval(($project->total_time_sheet) % 60);
+                            @endphp
+                            Total time: <span class="alert-danger">{{$hour}}:{{$min}} </span>
                         </h4>
 
                         <p>
