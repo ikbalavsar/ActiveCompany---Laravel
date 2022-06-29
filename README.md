@@ -59,12 +59,6 @@ In order to ensure that the Laravel community is welcoming to all, please review
 
 If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-#� �l�a�r�a�v�e�l�_�a�c�t�i�v�e�_�c�o�m�p�a�n�y�
-�
-�
 
 
 An organization needs regular and systematic work to be successful. Ensuring the controls of the employees and the correct and effective distribution of tasks can be included in this systematic work. The project management tool has been prepared with these considerations in mind. Thanks to the website prepared for these purposes, the distribution of tasks between departments will be visible. In addition, tasks assigned to employees, completed tasks and working times can be easily observed on the project management tool website. The database, which is the most important part of the project, will include departments, projects, employee information, and the characteristics of the assigned tasks.
